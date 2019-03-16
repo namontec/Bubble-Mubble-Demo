@@ -13,6 +13,8 @@ public:
   const static cocos2d::Size designResoluton;
   const static int  framesPerSecond;
 
+  const static int timer;
+
   const static std::string fileNameSpriteSheet;
   const static std::string fileNameBackground;
   const static std::string fileNameAim;
@@ -20,8 +22,16 @@ public:
   const static std::string fileNameCannon;
   const static std::string fileNameCannonBall;
   const static std::string fileNameStand;
-  const static std::string fileNameTarge;
-  const static std::string fileNameCLock;
+  const static std::string fileNameTarget;
+  const static std::string fileNameClock;
+
+
+  enum {
+    BACKGROUND = -1,
+    MIDDLEGROUND = 0,
+    FOREGROUND = 1
+  };
+
 
 };
 

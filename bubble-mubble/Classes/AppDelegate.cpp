@@ -68,6 +68,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // Set the design resolution
     glview->setDesignResolutionSize(Globals::designResoluton.width, Globals::designResoluton.height, ResolutionPolicy::NO_BORDER);
 
+    glview->setCursorVisible(false);
 
     register_all_packages();
 
