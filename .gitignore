@@ -110,7 +110,7 @@ proj.win32/*.sdf
 proj.win32/*.opensdf
 proj.win32/Debug.*/
 proj.win32/Release.*/
-IceHockey/proj.win32/Release.win32/
+bubble-mubble/proj.win32/Release.win32/
 
 # cocos2d-x common
 cocos2d/
