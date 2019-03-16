@@ -30,21 +30,23 @@ bool GameLayer::init()
   spriteCache->addSpriteFramesWithFile(Globals::fileNameSpriteSheet);
 
   //Add background
-  auto sprite = Sprite::createWithSpriteFrameName(Globals::fileNameBackground);
-  sprite->setAnchorPoint(Vec2(0,0));
-  this->addChild(sprite, Globals::BACKGROUND);
+  spawner_.addPrototype("background", Globals::fileNameBackground);
+  background_ = std::unique_ptr<GameObject>(spawner_.spawn("background"));
+  background_->getSprite()->setAnchorPoint(Vec2(0,0));
+  background_->setParent(this, Globals::BACKGROUND);
 
   //Add clock
-  sprite = Sprite::createWithSpriteFrameName(Globals::fileNameClock);
-  sprite->setScale(0.5f);
-  sprite->setPosition(Vec2(sprite->getBoundingBox().size.width , screenSize_.height/* - sprite->getBoundingBox().size.height*/));
-  this->addChild(sprite, Globals::FOREGROUND);
+  spawner_.addPrototype("clock", Globals::fileNameClock, 0.5f);
+  clock_ = std::unique_ptr<GameObject>(spawner_.spawn("clock"));
+  clock_->setPosition(Vec2(clock_->getSprite()->getBoundingBox().size.width, screenSize_.height));
+  clock_->setParent(this, Globals::FOREGROUND);
+
 
   //Add cannon stand
-  sprite = Sprite::createWithSpriteFrameName(Globals::fileNameStand);
-  sprite->setScale(0.2f);
-  sprite->setPosition(Vec2(screenSize_.width / 2, 40));
-  this->addChild(sprite);
+  spawner_.addPrototype("cannonStand", Globals::fileNameStand, 0.2f);
+  cannonStand_ = std::unique_ptr<GameObject>(spawner_.spawn("cannonStand"));
+  cannonStand_->setPosition(Vec2(screenSize_.width / 2, 40));
+  cannonStand_->setParent(this);
 
 
   //Add aim cursor
@@ -58,19 +60,9 @@ bool GameLayer::init()
 
   //Target
   spawner_.addPrototype("target", Globals::fileNameTarget, 0.2f);
-  sprite = spawner_.spawn("target")->getSprite();
-  sprite->setPosition(Vec2(200, 600));
-  sprite->setScale(0.2f);
-  this->addChild(sprite);
 
   //Bomb
-  sprite = Sprite::createWithSpriteFrameName(Globals::fileNameBomb);
-  sprite->setPosition(Vec2(300, 500));
-  sprite->setScale(0.2f);
-  this->addChild(sprite);
-
-
-
+  spawner_.addPrototype("bomb", Globals::fileNameBomb, 0.2f);
 
 
   //Add cannon
