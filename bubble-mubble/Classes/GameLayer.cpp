@@ -1,4 +1,6 @@
 #include "GameLayer.h"
+#include "Globals.h"
+#include <memory>
 //#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
@@ -25,7 +27,44 @@ bool GameLayer::init()
     return false;
   }
 
+  screenSize_ = Director::getInstance()->getWinSize();
+
+  auto spriteCache = SpriteFrameCache::getInstance();
+  spriteCache->addSpriteFramesWithFile(Globals::fileNameSpriteSheet);
+
+  auto sprite = Sprite::createWithSpriteFrameName(Globals::fileNameBackground);
+  sprite->setAnchorPoint(Vec2(0,0));
+  this->addChild(sprite);
+
+  //mouse events
+  auto mouseListener = EventListenerMouse::create();
+  mouseListener->onMouseMove = CC_CALLBACK_1(GameLayer::onMouseMove, this);
+  mouseListener->onMouseDown = CC_CALLBACK_1(GameLayer::onMouseDown, this);
+  _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
+  this->scheduleUpdate();
   return true;
+}
+
+void GameLayer::update(float deltaTime)
+{
+
+}
+
+cocos2d::Vec2 GameLayer::getMousePosition()
+{
+  return mousePosition_;
+}
+
+void GameLayer::onMouseMove(cocos2d::Event * event)
+{
+  EventMouse* e = (EventMouse*)event;
+  mousePosition_ = e->getLocation();
+}
+
+void GameLayer::onMouseDown(cocos2d::Event * event)
+{
+
 }
 
 

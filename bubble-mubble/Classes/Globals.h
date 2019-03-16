@@ -14,9 +14,8 @@ public:
   const static int  framesPerSecond;
 
   const static std::string fileNameSpriteSheet;
-  const static std::string fileNameSpriteSheet;
   const static std::string fileNameBackground;
-  const static std::string fileNameSpriteSheet;
+  const static std::string fileNameAim;
   const static std::string fileNameBomb;
   const static std::string fileNameCannon;
   const static std::string fileNameCannonBall;

@@ -8,7 +8,7 @@ const int Globals::framesPerSecond = 60;
 
 const std::string Globals::fileNameSpriteSheet  { "sprites.plist" };
 const std::string Globals::fileNameBackground   { "background.png" };
-const std::string Globals::fileNameSpriteSheet  { "Aim.png" };
+const std::string Globals::fileNameAim          { "Aim.png" };
 const std::string Globals::fileNameBomb         { "Bomb.png" };
 const std::string Globals::fileNameCannon       { "Cannon.png" };
 const std::string Globals::fileNameCannonBall   { "Cannonball.png" };
