@@ -43,3 +43,8 @@ GameObject * GameObject::clone()
 {
   return new GameObject(fileName_, scale_);
 }
+
+void GameObject::update(float deltaTime)
+{
+  
+}

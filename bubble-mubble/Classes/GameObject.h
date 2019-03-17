@@ -1,7 +1,10 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include "cocos2d.h"
+#include "Components\PhysicComponent.h"
+#include "Components\GraphicComponent.h"
 
 class GameObject
 {
@@ -15,14 +18,19 @@ public:
   void              setPosition(cocos2d::Vec2 position);
 
   virtual GameObject* clone();
+  virtual void      update(float deltaTime);
+
+protected:
+  PhysicComponent*   physic_;
+  GraphicComponent*  graphic_;
 
 private:
   cocos2d::Sprite*  sprite_;
   std::string       fileName_;
   float             scale_;
 
-  float             x_, y_;
-  float             xNew_, yNew_;
-  float             velocity_;
+  cocos2d::Vec2     position_; 
+  cocos2d::Vec2     velocity_{ cocos2d::Vec2::ZERO };
+
 };
 

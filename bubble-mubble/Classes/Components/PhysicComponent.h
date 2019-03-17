@@ -1,15 +1,14 @@
 #pragma once
 
-#include "GameObject.h"
-#include "Component.h"
+class GameObject;
 
-class PhysicComponent : pubic Component
+class PhysicComponent
 {
 public:
-  PhysicComponent(GameObject* gameObject);
+  PhysicComponent();
   virtual ~PhysicComponent();
 
-  virtual void update(float deltaTime) override;
+  virtual void update(GameObject& gameObject, float deltaTime);
 
 };
 
