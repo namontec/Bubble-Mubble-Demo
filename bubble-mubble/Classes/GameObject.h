@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include "Components\PhysicComponent.h"
 #include "Components\GraphicComponent.h"
+#include "Components\TransformComponent.h"
 
 class GameObject
 {
@@ -21,8 +22,9 @@ public:
   virtual void      update(float deltaTime);
 
 protected:
-  PhysicComponent*   physic_;
-  GraphicComponent*  graphic_;
+  TransformComponent* transform_;
+  PhysicComponent*    physic_;
+  GraphicComponent*   graphic_;
 
 private:
   cocos2d::Sprite*  sprite_;

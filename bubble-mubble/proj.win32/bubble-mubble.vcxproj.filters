@@ -42,6 +42,9 @@
     <ClCompile Include="..\Classes\Components\GraphicComponent.cpp">
       <Filter>src\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Components\TransformComponent.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -69,6 +72,9 @@
       <Filter>src\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Components\GraphicComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\TransformComponent.h">
       <Filter>src\Components</Filter>
     </ClInclude>
   </ItemGroup>
