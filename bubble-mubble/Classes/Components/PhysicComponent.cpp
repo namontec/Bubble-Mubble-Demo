@@ -12,6 +12,11 @@ PhysicComponent::~PhysicComponent()
 }
 
 
-void PhysicComponent::update(GameObject& gameObject, float deltaTime)
+void PhysicComponent::update(GameObject* gameObject, float deltaTime)
 {
+}
+
+PhysicComponent* PhysicComponent::clone()
+{
+  return new PhysicComponent();
 }

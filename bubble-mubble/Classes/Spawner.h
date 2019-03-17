@@ -12,7 +12,7 @@ public:
            Spawner();
   virtual ~Spawner();
 
-  void        addPrototype(const std::string& name, const std::string& fileName, float scale = 1.0f);
+  void        addPrototype(GameObject* gameObject, const std::string& name);
   GameObject* spawn(const std::string& byName);
 
 private:

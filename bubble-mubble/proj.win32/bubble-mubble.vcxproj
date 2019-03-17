@@ -152,7 +152,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Canon.cpp" />
     <ClCompile Include="..\Classes\Components\GraphicComponent.cpp" />
     <ClCompile Include="..\Classes\Components\PhysicComponent.cpp" />
-    <ClCompile Include="..\Classes\Components\TransformComponent.cpp" />
+    <ClCompile Include="..\Classes\Components\InputComponent.cpp" />
+    <ClCompile Include="..\Classes\Components\PlayerInputComponent.cpp" />
     <ClCompile Include="..\Classes\GameLayer.cpp" />
     <ClCompile Include="..\Classes\GameObject.cpp" />
     <ClCompile Include="..\Classes\Globals.cpp" />
@@ -164,7 +165,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Canon.h" />
     <ClInclude Include="..\Classes\Components\GraphicComponent.h" />
     <ClInclude Include="..\Classes\Components\PhysicComponent.h" />
-    <ClInclude Include="..\Classes\Components\TransformComponent.h" />
+    <ClInclude Include="..\Classes\Components\InputComponent.h" />
+    <ClInclude Include="..\Classes\Components\PlayerInputComponent.h" />
     <ClInclude Include="..\Classes\GameLayer.h" />
     <ClInclude Include="..\Classes\GameObject.h" />
     <ClInclude Include="..\Classes\Globals.h" />

@@ -42,7 +42,10 @@
     <ClCompile Include="..\Classes\Components\GraphicComponent.cpp">
       <Filter>src\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Components\TransformComponent.cpp">
+    <ClCompile Include="..\Classes\Components\InputComponent.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Components\PlayerInputComponent.cpp">
       <Filter>src\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,7 +77,10 @@
     <ClInclude Include="..\Classes\Components\GraphicComponent.h">
       <Filter>src\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Components\TransformComponent.h">
+    <ClInclude Include="..\Classes\Components\InputComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\PlayerInputComponent.h">
       <Filter>src\Components</Filter>
     </ClInclude>
   </ItemGroup>

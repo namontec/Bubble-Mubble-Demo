@@ -12,9 +12,9 @@ Spawner::~Spawner()
 }
 
 
-void Spawner::addPrototype(const std::string& name, const std::string& fileName, float scale)
+void Spawner::addPrototype(GameObject* gameObject, const std::string& name)
 {
-  prototypes_[name] = std::make_shared<GameObject>(fileName, scale);
+  prototypes_[name] = std::shared_ptr<GameObject>(gameObject);
 }
 
 

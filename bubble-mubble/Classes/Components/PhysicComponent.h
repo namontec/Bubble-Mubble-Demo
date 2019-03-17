@@ -8,7 +8,9 @@ public:
   PhysicComponent();
   virtual ~PhysicComponent();
 
-  virtual void update(GameObject& gameObject, float deltaTime);
+  virtual void update(GameObject* gameObject, float deltaTime);
+
+  virtual PhysicComponent* clone();
 
 };
 

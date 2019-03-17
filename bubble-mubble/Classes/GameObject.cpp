@@ -1,50 +1,71 @@
 #include "GameObject.h"
 
 
-
-GameObject::GameObject(const std::string& fileName, float scale)
-  : fileName_(fileName), scale_(scale)
+GameObject::GameObject(GraphicComponent* graphic, PhysicComponent* physic, InputComponent* input)
+ : graphic_(std::shared_ptr<GraphicComponent>(graphic)),
+   physic_ (std::shared_ptr<PhysicComponent>(physic)),
+   input_  (std::shared_ptr<InputComponent>(input))
 {
-  sprite_ = cocos2d::Sprite::createWithSpriteFrameName(fileName_);
-  sprite_->setScale(scale_);
-  sprite_->retain();
 }
+
 
 GameObject::~GameObject()
 {
-  sprite_->release();
-}
 
-cocos2d::Sprite * GameObject::getSprite()
-{
-  return sprite_;
 }
 
 
-void GameObject::setParentNode(cocos2d::Node *parent, int depth)
-{
-  parent->addChild(sprite_, depth);
-}
-
-
-cocos2d::Vec2 GameObject::getPosition()
-{
-  return sprite_->getPosition();
-}
-
-
-void GameObject::setPosition(cocos2d::Vec2 position)
-{
-  sprite_->setPosition(position);
-}
 
 
 GameObject * GameObject::clone()
 {
-  return new GameObject(fileName_, scale_);
+  GraphicComponent* graphic = nullptr;
+  PhysicComponent*  physic = nullptr;
+  InputComponent*   input = nullptr;
+
+  if (input_) {
+    input = input_->clone();
+  }
+
+  if (physic_) {
+    physic = physic_->clone();
+  }
+
+  if (graphic_) {
+    graphic = graphic_->clone();
+  }
+
+  return new GameObject( graphic, physic, input );
 }
+
 
 void GameObject::update(float deltaTime)
 {
-  
+  if (input_) {
+    input_->update(this);
+  }
+
+
+  if (physic_) {
+    physic_->update(this, deltaTime);
+  }
+
+  if (graphic_) {
+    graphic_->update(this);
+  }
+}
+
+std::shared_ptr<InputComponent> GameObject::getInput()
+{
+  return input_;
+}
+
+std::shared_ptr<PhysicComponent> GameObject::getPhysic()
+{
+  return physic_;
+}
+
+std::shared_ptr<GraphicComponent> GameObject::getGraphic()
+{
+  return graphic_;
 }

@@ -2,10 +2,11 @@
 
 
 
-Canon::Canon(const std::string& fileName, float scale, Spawner* spawner, const std::string& ballName)
-  : GameObject(fileName, scale), spawner_(spawner), ballName_(ballName)
+Canon::Canon(Spawner* spawner, const std::string & ballName, GraphicComponent * graphic, PhysicComponent * physic, InputComponent * input)
+  :GameObject(graphic, physic, input), spawner_(spawner), ballName_(ballName)
 {
 }
+
 
 
 Canon::~Canon()
@@ -15,7 +16,7 @@ Canon::~Canon()
 
 void Canon::setRotationToVector(const cocos2d::Vec2 coordinates)
 {
-  cocos2d::Vec2 canonPosition = getPosition();
+  cocos2d::Vec2 canonPosition = getGraphic()->getPosition();
   cocos2d::Vec2 vector = (coordinates - canonPosition);
 
   float angle = vector.getNormalized().getAngle();
@@ -28,27 +29,27 @@ void Canon::setRotationToVector(const cocos2d::Vec2 coordinates)
     angle = 90;
   }
 
-  getSprite()->setRotation(angle);
+  getGraphic()->setRotation(angle);
 }
 
 
 void Canon::setRotation(float angle)
 {
-  getSprite()->setRotation(angle);
+  getGraphic()->setRotation(angle);
 }
 
 
 float Canon::getRotation()
 {
-  return getSprite()->getRotation();
+  return getGraphic()->getRotation();
 }
 
 
-void Canon::fireCanon(cocos2d::Vec2 direction, cocos2d::Layer* layer)
+void Canon::fireCanon(cocos2d::Vec2 targetPosition, cocos2d::Layer* layer)
 {
   auto ball = std::shared_ptr<GameObject>(spawner_->spawn(ballName_));
-  auto sprite = ball->getSprite();
-  layer->addChild(sprite);
+  ball->getGraphic()->setPosition(targetPosition);
+  ball->getGraphic()->setParentNode(layer);
 }
 
 

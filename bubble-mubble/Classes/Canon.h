@@ -7,7 +7,7 @@ class Canon :
   public GameObject
 {
 public:
-  Canon(const std::string& fileName, float scale, Spawner* spawner, const std::string& ballName);
+  Canon(Spawner* spawner, const std::string& ballName, GraphicComponent* graphic = nullptr, PhysicComponent* physic = nullptr, InputComponent* input = nullptr);
   virtual ~Canon();
 
   void  setRotationToVector(const cocos2d::Vec2 toVector);
