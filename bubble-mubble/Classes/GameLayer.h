@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include "cocos2d.h"
 #include "GameObject.h"
 #include "Canon.h"
@@ -32,6 +33,8 @@ private:
   std::unique_ptr<GameObject> cannonStand_;
 
   Spawner spawner_;
+
+  std::list<std::shared_ptr<GameObject>> objectsPool_;
 };
 
 

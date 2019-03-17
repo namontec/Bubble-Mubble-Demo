@@ -15,7 +15,7 @@ public:
   virtual ~GameObject();
 
   virtual GameObject* clone();
-  virtual void      update(float deltaTime);
+  virtual void        update(float deltaTime);
 
   std::shared_ptr  <InputComponent> getInput();
   std::shared_ptr <PhysicComponent> getPhysic();

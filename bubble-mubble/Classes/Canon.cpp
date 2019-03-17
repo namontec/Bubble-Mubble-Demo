@@ -45,11 +45,14 @@ float Canon::getRotation()
 }
 
 
-void Canon::fireCanon(cocos2d::Vec2 targetPosition, cocos2d::Layer* layer)
+void Canon::fireCanon(cocos2d::Vec2 targetPosition, cocos2d::Layer* layer, std::list<std::shared_ptr<GameObject>> *objectsPool)
 {
   auto ball = std::shared_ptr<GameObject>(spawner_->spawn(ballName_));
   ball->getGraphic()->setPosition(targetPosition);
+  ball->getPhysic()->setVelocity(cocos2d::Vec2(100, 0));
   ball->getGraphic()->setParentNode(layer);
+
+  objectsPool->push_back(ball);
 }
 
 

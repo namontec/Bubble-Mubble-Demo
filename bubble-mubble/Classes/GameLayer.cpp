@@ -56,6 +56,7 @@ bool GameLayer::init()
 
   //Add aim cursor
   graphic = new GraphicComponent(Globals::fileNameAim);
+
   aim_ = std::make_unique<GameObject>(graphic);
   aim_->getGraphic()->setScale(0.5f);
   aim_->getGraphic()->setPosition(Vec2(screenSize_.width / 2, screenSize_.height / 2));
@@ -64,28 +65,29 @@ bool GameLayer::init()
   
   //Add cannon ball to spawner
   graphic = new GraphicComponent(Globals::fileNameCannonBall);
+  PhysicComponent*  physic = new PhysicComponent();
   graphic->setScale(0.2f);
-  auto gameObject = new GameObject(graphic);
+  auto gameObject = new GameObject(graphic, physic);
   spawner_.addPrototype(gameObject, "ball");
  
 
   //Add target to spawner
   graphic = new GraphicComponent(Globals::fileNameTarget);
   graphic->setScale(0.2f);
-  auto gameObject = new GameObject(graphic);
+  gameObject = new GameObject(graphic);
   spawner_.addPrototype(gameObject, "target");
 
   //Add bomb to spawner
   graphic = new GraphicComponent(Globals::fileNameBomb);
   graphic->setScale(0.2f);
-  auto gameObject = new GameObject(graphic);
+  gameObject = new GameObject(graphic);
   spawner_.addPrototype(gameObject, "bomb");
   
 
 
   //Add cannon
-  InputComponent*   input   = new PlayerInputComponent();
-  PhysicComponent*  physic  = new PhysicComponent();
+  InputComponent*   input  = new PlayerInputComponent();
+  physic = new PhysicComponent();
   graphic = new GraphicComponent(Globals::fileNameCannon);
   cannon_ = std::make_unique<Canon>(&spawner_, "ball", graphic, physic, input);
   cannon_->getGraphic()->setScale(0.2f);
@@ -111,6 +113,10 @@ void GameLayer::update(float deltaTime)
   //Control cannon rotation
   cannon_->setRotationToVector(getMousePosition());
   aim_->getGraphic()->setPosition(getMousePosition());
+
+  for (auto object : objectsPool_) {
+    object->update(deltaTime);
+  }
 }
 
 
@@ -130,7 +136,7 @@ void GameLayer::onMouseMove(cocos2d::Event * event)
 
 void GameLayer::onMouseDown(cocos2d::Event * event)
 {
-  cannon_->fireCanon(mousePosition_, this);
+  cannon_->fireCanon(mousePosition_, this, &objectsPool_);
 }
 
 

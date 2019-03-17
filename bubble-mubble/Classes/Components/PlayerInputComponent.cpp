@@ -15,6 +15,7 @@ PlayerInputComponent::~PlayerInputComponent()
 
 void PlayerInputComponent::update(GameObject * gameObject)
 {
+
 }
 
 PlayerInputComponent* PlayerInputComponent::clone()

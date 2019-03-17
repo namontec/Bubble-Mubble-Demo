@@ -13,6 +13,12 @@ GraphicComponent::GraphicComponent(const std::string& fileName)
 
 GraphicComponent::~GraphicComponent()
 {
+  bool spriteHasParent = sprite_->getParent() != nullptr;
+  if (spriteHasParent)
+  {
+    sprite_->removeFromParent();
+  }
+
   sprite_->release();
 }
 
@@ -65,10 +71,12 @@ float GraphicComponent::getScale()
   return sprite_->getScale();
 }
 
+
 void GraphicComponent::setRotation(float angle)
 {
   sprite_->setRotation(angle);
 }
+
 
 float GraphicComponent::getRotation()
 {

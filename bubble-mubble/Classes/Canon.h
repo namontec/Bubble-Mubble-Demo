@@ -14,7 +14,7 @@ public:
   void  setRotation(float angle);
   float getRotation();
 
-  void fireCanon(cocos2d::Vec2 direction, cocos2d::Layer* layer);
+  void fireCanon(cocos2d::Vec2 direction, cocos2d::Layer* layer, std::list<std::shared_ptr<GameObject>> *objectsPool);
 
 private:
   Spawner* spawner_;
