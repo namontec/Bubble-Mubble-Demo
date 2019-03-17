@@ -10,7 +10,7 @@ public:
   virtual ~GameObject();
 
   cocos2d::Sprite*  getSprite();
-  void              setParent(cocos2d::Node *parent, int depth = 0);
+  void              setParentNode(cocos2d::Node *parent, int depth = 0);
   cocos2d::Vec2     getPosition();
   void              setPosition(cocos2d::Vec2 position);
 
@@ -20,5 +20,9 @@ private:
   cocos2d::Sprite*  sprite_;
   std::string       fileName_;
   float             scale_;
+
+  float             x_, y_;
+  float             xNew_, yNew_;
+  float             velocity_;
 };
 

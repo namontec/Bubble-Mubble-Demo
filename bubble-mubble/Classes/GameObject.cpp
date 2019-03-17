@@ -21,7 +21,7 @@ cocos2d::Sprite * GameObject::getSprite()
 }
 
 
-void GameObject::setParent(cocos2d::Node *parent, int depth)
+void GameObject::setParentNode(cocos2d::Node *parent, int depth)
 {
   parent->addChild(sprite_, depth);
 }

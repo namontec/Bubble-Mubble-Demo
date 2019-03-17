@@ -33,26 +33,26 @@ bool GameLayer::init()
   spawner_.addPrototype("background", Globals::fileNameBackground);
   background_ = std::unique_ptr<GameObject>(spawner_.spawn("background"));
   background_->getSprite()->setAnchorPoint(Vec2(0,0));
-  background_->setParent(this, Globals::BACKGROUND);
+  background_->setParentNode(this, Globals::BACKGROUND);
 
   //Add clock
   spawner_.addPrototype("clock", Globals::fileNameClock, 0.5f);
   clock_ = std::unique_ptr<GameObject>(spawner_.spawn("clock"));
   clock_->setPosition(Vec2(clock_->getSprite()->getBoundingBox().size.width, screenSize_.height));
-  clock_->setParent(this, Globals::FOREGROUND);
+  clock_->setParentNode(this, Globals::FOREGROUND);
 
 
   //Add cannon stand
   spawner_.addPrototype("cannonStand", Globals::fileNameStand, 0.2f);
   cannonStand_ = std::unique_ptr<GameObject>(spawner_.spawn("cannonStand"));
   cannonStand_->setPosition(Vec2(screenSize_.width / 2, 40));
-  cannonStand_->setParent(this);
+  cannonStand_->setParentNode(this);
 
 
   //Add aim cursor
   aim_ = std::make_unique<GameObject>(Globals::fileNameAim, 0.5f);
   aim_->setPosition(Vec2(screenSize_.width / 2, screenSize_.height / 2));
-  aim_->setParent(this, Globals::FOREGROUND);
+  aim_->setParentNode(this, Globals::FOREGROUND);
 
 
   //Add cannon ball
@@ -69,7 +69,7 @@ bool GameLayer::init()
   cannon_ = std::make_unique<Canon>(Globals::fileNameCannon, 0.2f, &spawner_, "ball");
   cannon_->setPosition(Vec2(screenSize_.width / 2, 80));
   cannon_->getSprite()->setAnchorPoint(Vec2(0.5f, 1.0f / 3.0f));
-  cannon_->setParent(this);
+  cannon_->setParentNode(this);
 
 
   //Add mouse events listener
