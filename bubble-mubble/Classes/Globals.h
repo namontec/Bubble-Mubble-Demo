@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include <string>
+#include <stdlib.h>
 
 class Globals
 {
@@ -9,11 +10,15 @@ public:
   Globals();
   virtual ~Globals();
 
+  static int random(int min, int max);
+
 public:
   const static cocos2d::Size designResoluton;
-  const static int  framesPerSecond;
+  const static int framesPerSecond;
 
   const static int timer;
+  const static int CountTarget;
+  const static int BallSpeed;
 
   const static std::string fileNameSpriteSheet;
   const static std::string fileNameBackground;

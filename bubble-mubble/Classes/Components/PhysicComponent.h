@@ -22,6 +22,7 @@ public:
   virtual PhysicComponent* clone();
 
 private:
+  cocos2d::Vec2 vector_;
   cocos2d::Vec2 velocity_;
   cocos2d::Vec2 gravity_;
 };

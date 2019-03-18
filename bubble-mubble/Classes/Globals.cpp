@@ -7,6 +7,8 @@ const Size Globals::designResoluton = Size(1024, 768);
 const int Globals::framesPerSecond = 60;
 
 const int Globals::timer = 50;
+const int Globals::CountTarget = 20;
+const int Globals::BallSpeed = 100;
 
 const std::string Globals::fileNameSpriteSheet  { "sprites.plist" };
 const std::string Globals::fileNameBackground   { "background.png" };
@@ -26,4 +28,12 @@ Globals::Globals()
 
 Globals::~Globals()
 {
+}
+
+
+
+
+int Globals::random(int min, int max)
+{
+  return rand() % (max - min + 1) + min;
 }

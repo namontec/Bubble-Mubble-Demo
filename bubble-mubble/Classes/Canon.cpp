@@ -1,4 +1,5 @@
 #include "Canon.h"
+#include <math.h>
 
 
 
@@ -48,9 +49,16 @@ float Canon::getRotation()
 
 void Canon::fireCanon(cocos2d::Vec2 targetPosition)
 {
+  //
+  float acceleration = Globals::BallSpeed;
+  float angle = getRotation();
+  cocos2d::Vec2 direction = cocos2d::Vec2(std::cos(angle), std::sin(angle));
+  //
+
   auto ball = std::shared_ptr<GameObject>(spawner_->spawn(ballName_));
-  ball->getGraphic()->setPosition(targetPosition);
-  ball->getPhysic()->setVelocity(cocos2d::Vec2(100, 0));
+  ball->getGraphic()->setPosition( getGraphic()->getPosition() );
+
+  ball->getPhysic()->setVelocity(direction * acceleration);
   ball->getGraphic()->setParentNode(parentNode_);
 
   objectsPool_->push_back(ball);
@@ -61,6 +69,7 @@ void Canon::update(float deltatime)
 {
   auto mousePosition = getInput()->getInputState()->getMousePosition();
   setRotationToVector(mousePosition);
+
 
   bool mouseIsDown = getInput()->getInputState()->getMouseDown();
   if (mouseIsDown) {

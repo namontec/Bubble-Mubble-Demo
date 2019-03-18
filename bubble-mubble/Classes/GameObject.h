@@ -26,9 +26,6 @@ protected:
   std::shared_ptr <PhysicComponent> physic_;
   std::shared_ptr<GraphicComponent> graphic_;
 
-private:
-  cocos2d::Vec2     position_; 
-  cocos2d::Vec2     velocity_{ cocos2d::Vec2::ZERO };
 
 };
 

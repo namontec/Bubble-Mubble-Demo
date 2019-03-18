@@ -73,8 +73,9 @@ bool GameLayer::init()
 
   //Add target to spawner
   graphic = new GraphicComponent(Globals::fileNameTarget);
+  physic = new PhysicComponent();
   graphic->setScale(0.2f);
-  gameObject = new GameObject(graphic);
+  gameObject = new GameObject(graphic, physic);
   spawner_.addPrototype(gameObject, "target");
 
   //Add bomb to spawner
@@ -83,7 +84,19 @@ bool GameLayer::init()
   gameObject = new GameObject(graphic);
   spawner_.addPrototype(gameObject, "bomb");
   
-
+  //Spawn Targets
+  int x, y, velX, velY;
+  for (int i = 0; i < Globals::CountTarget; i++) {
+    gameObject = spawner_.spawn("target");
+    x = Globals::random(50, screenSize_.width-50);
+    y = Globals::random(50, screenSize_.height-50);
+    velX = Globals::random(-100, 100);
+    velY = Globals::random(-100, 100);
+    gameObject->getGraphic()->setPosition(Vec2(x, y));
+    gameObject->getPhysic()->setVelocity(Vec2(velX, velY));
+    gameObject->getGraphic()->setParentNode(this);
+    objectsPool_.push_back(std::shared_ptr<GameObject>(gameObject));
+  }
 
   //Add cannon
   InputComponent*   input  = new PlayerInputComponent(&inputState_);
@@ -142,10 +155,12 @@ void GameLayer::onMouseDown(cocos2d::Event * event)
   inputState_.setMouseDown(true);
 }
 
+
 void GameLayer::onMouseUp(cocos2d::Event * event)
 {
   inputState_.setMouseDown(false);
 }
+
 
 std::list<std::shared_ptr<GameObject>>* GameLayer::getObjectPool()
 {
