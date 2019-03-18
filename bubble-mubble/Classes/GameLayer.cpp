@@ -24,7 +24,7 @@ bool GameLayer::init()
   screenSize_ = Director::getInstance()->getWinSize();
   score_ = 0;
   timer_ = Globals::timer;
-  mousePosition_ = Vec2(screenSize_.width / 2, screenSize_.height  / 2);
+  inputState_.setMousePosition(Vec2(screenSize_.width / 2, screenSize_.height / 2));
 
   //initialize sprites
   auto spriteCache = SpriteFrameCache::getInstance();
@@ -86,10 +86,10 @@ bool GameLayer::init()
 
 
   //Add cannon
-  InputComponent*   input  = new PlayerInputComponent();
+  InputComponent*   input  = new PlayerInputComponent(&inputState_);
   physic = new PhysicComponent();
   graphic = new GraphicComponent(Globals::fileNameCannon);
-  cannon_ = std::make_unique<Canon>(&spawner_, "ball", graphic, physic, input);
+  cannon_ = std::make_unique<Canon>(&spawner_, "ball", &objectsPool_, this, graphic, physic, input);
   cannon_->getGraphic()->setScale(0.2f);
   cannon_->getGraphic()->setPosition(Vec2(screenSize_.width / 2, 80));
   cannon_->getGraphic()->setAnchorPoint(Vec2(0.5f, 1.0f / 3.0f));
@@ -100,6 +100,7 @@ bool GameLayer::init()
   auto mouseListener = EventListenerMouse::create();
   mouseListener->onMouseMove = CC_CALLBACK_1(GameLayer::onMouseMove, this);
   mouseListener->onMouseDown = CC_CALLBACK_1(GameLayer::onMouseDown, this);
+  mouseListener->onMouseUp = CC_CALLBACK_1(GameLayer::onMouseUp, this);
   _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
   this->scheduleUpdate();
@@ -109,9 +110,8 @@ bool GameLayer::init()
 
 void GameLayer::update(float deltaTime)
 {
+  cannon_->update(deltaTime);
 
-  //Control cannon rotation
-  cannon_->setRotationToVector(getMousePosition());
   aim_->getGraphic()->setPosition(getMousePosition());
 
   for (auto object : objectsPool_) {
@@ -122,21 +122,34 @@ void GameLayer::update(float deltaTime)
 
 const cocos2d::Vec2 GameLayer::getMousePosition()
 {
-  return mousePosition_;
+  return inputState_.getMousePosition();
 }
 
 
 void GameLayer::onMouseMove(cocos2d::Event * event)
 {
   EventMouse* e = (EventMouse*)event;
-  mousePosition_.x = e->getCursorX();
-  mousePosition_.y = e->getCursorY();
+  cocos2d::Vec2 newMousePosition;
+  newMousePosition.x = e->getCursorX();
+  newMousePosition.y = e->getCursorY();
+  inputState_.setMousePosition(newMousePosition);
+
 }
 
 
 void GameLayer::onMouseDown(cocos2d::Event * event)
 {
-  cannon_->fireCanon(mousePosition_, this, &objectsPool_);
+  inputState_.setMouseDown(true);
+}
+
+void GameLayer::onMouseUp(cocos2d::Event * event)
+{
+  inputState_.setMouseDown(false);
+}
+
+std::list<std::shared_ptr<GameObject>>* GameLayer::getObjectPool()
+{
+  return &objectsPool_;
 }
 
 

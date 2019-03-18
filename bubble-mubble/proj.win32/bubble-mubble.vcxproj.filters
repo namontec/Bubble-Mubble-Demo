@@ -48,6 +48,9 @@
     <ClCompile Include="..\Classes\Components\PlayerInputComponent.cpp">
       <Filter>src\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\InputState.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Components\PlayerInputComponent.h">
       <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InputState.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

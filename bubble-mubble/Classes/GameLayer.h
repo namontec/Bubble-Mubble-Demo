@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Canon.h"
 #include "Spawner.h"
+#include "InputState.h"
 
 class GameLayer : public cocos2d::Layer
 {
@@ -18,10 +19,13 @@ public:
   const cocos2d::Vec2 getMousePosition();
   void onMouseMove(cocos2d::Event *event);
   void onMouseDown(cocos2d::Event *event);
+  void onMouseUp(cocos2d::Event *event);
+
+  std::list<std::shared_ptr<GameObject>>* getObjectPool();
 
 private:
   cocos2d::Size screenSize_;
-  cocos2d::Vec2 mousePosition_;
+  InputState inputState_;
 
   int score_;
   int timer_;

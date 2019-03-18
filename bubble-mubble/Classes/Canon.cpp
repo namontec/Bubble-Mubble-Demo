@@ -2,11 +2,12 @@
 
 
 
-Canon::Canon(Spawner* spawner, const std::string & ballName, GraphicComponent * graphic, PhysicComponent * physic, InputComponent * input)
-  :GameObject(graphic, physic, input), spawner_(spawner), ballName_(ballName)
+Canon::Canon(Spawner* spawner, const std::string & ballName, std::list<std::shared_ptr<GameObject>> *objectsPool, cocos2d::Node* parentNode,
+  GraphicComponent * graphic,   PhysicComponent * physic, InputComponent * input)
+  :GameObject(graphic, physic, input), spawner_(spawner), ballName_(ballName), parentNode_(parentNode)
 {
+  objectsPool_ = objectsPool;
 }
-
 
 
 Canon::~Canon()
@@ -45,14 +46,27 @@ float Canon::getRotation()
 }
 
 
-void Canon::fireCanon(cocos2d::Vec2 targetPosition, cocos2d::Layer* layer, std::list<std::shared_ptr<GameObject>> *objectsPool)
+void Canon::fireCanon(cocos2d::Vec2 targetPosition)
 {
   auto ball = std::shared_ptr<GameObject>(spawner_->spawn(ballName_));
   ball->getGraphic()->setPosition(targetPosition);
   ball->getPhysic()->setVelocity(cocos2d::Vec2(100, 0));
-  ball->getGraphic()->setParentNode(layer);
+  ball->getGraphic()->setParentNode(parentNode_);
 
-  objectsPool->push_back(ball);
+  objectsPool_->push_back(ball);
+}
+
+
+void Canon::update(float deltatime)
+{
+  auto mousePosition = getInput()->getInputState()->getMousePosition();
+  setRotationToVector(mousePosition);
+
+  bool mouseIsDown = getInput()->getInputState()->getMouseDown();
+  if (mouseIsDown) {
+    fireCanon (mousePosition);
+  }
+
 }
 
 

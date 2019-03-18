@@ -3,21 +3,31 @@
 #include "GameObject.h"
 #include "Spawner.h"
 
-class Canon :
-  public GameObject
+class Canon : public GameObject
 {
 public:
-  Canon(Spawner* spawner, const std::string& ballName, GraphicComponent* graphic = nullptr, PhysicComponent* physic = nullptr, InputComponent* input = nullptr);
+  Canon(Spawner* spawner, 
+    const std::string& ballName,
+    std::list<std::shared_ptr<GameObject>> *objectsPool,
+    cocos2d::Node* parentNode_,
+    GraphicComponent* graphic = nullptr, 
+    PhysicComponent* physic = nullptr, 
+    InputComponent* input = nullptr);
+
   virtual ~Canon();
 
   void  setRotationToVector(const cocos2d::Vec2 toVector);
   void  setRotation(float angle);
   float getRotation();
 
-  void fireCanon(cocos2d::Vec2 direction, cocos2d::Layer* layer, std::list<std::shared_ptr<GameObject>> *objectsPool);
+  void fireCanon(cocos2d::Vec2 direction);
+
+  virtual void update(float deltatime) override;
 
 private:
   Spawner* spawner_;
   std::string ballName_;
+  std::list<std::shared_ptr<GameObject>> *objectsPool_;
+  cocos2d::Node* parentNode_;
 };
 
