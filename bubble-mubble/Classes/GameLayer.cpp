@@ -42,7 +42,7 @@ bool GameLayer::init()
   graphic = new GraphicComponent(Globals::fileNameClock);
   clock_ = std::make_unique<GameObject>(graphic);
   clock_->getGraphic()->setScale(0.5f);
-  clock_->getGraphic()->setPosition(Vec2(clock_->getGraphic()->getSprite()->getBoundingBox().size.width, screenSize_.height));
+  clock_->getGraphic()->setPosition(Vec2(clock_->getGraphic()->getNode()->getBoundingBox().size.width, screenSize_.height));
   clock_->getGraphic()->setParentNode(this, Globals::FOREGROUND);
   
 
