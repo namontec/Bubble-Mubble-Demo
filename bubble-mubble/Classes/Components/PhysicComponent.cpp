@@ -19,6 +19,7 @@ void PhysicComponent::update(GameObject* gameObject, float deltaTime)
   if (graphic) {
     auto position = graphic->getPosition();
     position += velocity_ * deltaTime;
+    //position += gravity_;
     graphic->setPosition(position);
   }
 }
@@ -59,8 +60,23 @@ cocos2d::Vec2 PhysicComponent::getGravity()
   return gravity_;
 }
 
+void PhysicComponent::setSpeed(float speed)
+{
+  speed_ = speed;
+}
+
+float PhysicComponent::getSpeed()
+{
+  return speed_;
+}
+
 
 PhysicComponent* PhysicComponent::clone()
 {
-  return new PhysicComponent();
+  auto component = new PhysicComponent();
+  component->gravity_ = gravity_;
+  component->velocity_ = velocity_;
+  component->vector_ = vector_;
+  component->speed_ = speed_;
+  return component;
 }

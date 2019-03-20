@@ -159,6 +159,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Globals.cpp" />
     <ClCompile Include="..\Classes\InputState.cpp" />
     <ClCompile Include="..\Classes\Spawner.cpp" />
+    <ClCompile Include="..\Classes\Strategy\AbstractUpdate.cpp" />
+    <ClCompile Include="..\Classes\Strategy\BallUpdate.cpp" />
+    <ClCompile Include="..\Classes\Strategy\TargetUpdate.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +176,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Globals.h" />
     <ClInclude Include="..\Classes\InputState.h" />
     <ClInclude Include="..\Classes\Spawner.h" />
+    <ClInclude Include="..\Classes\Strategy\AbstractUpdate.h" />
+    <ClInclude Include="..\Classes\Strategy\BallUpdate.h" />
+    <ClInclude Include="..\Classes\Strategy\TargetUpdate.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

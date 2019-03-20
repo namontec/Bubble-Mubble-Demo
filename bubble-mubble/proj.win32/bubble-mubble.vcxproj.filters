@@ -13,6 +13,9 @@
     <Filter Include="src\Components">
       <UniqueIdentifier>{5e9e4031-cb6a-4b23-8640-f47c4494cb6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Strategy">
+      <UniqueIdentifier>{c66c65cb-04dd-4bd1-b7da-57d8eba9cf86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +54,15 @@
     <ClCompile Include="..\Classes\InputState.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Strategy\AbstractUpdate.cpp">
+      <Filter>src\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Strategy\BallUpdate.cpp">
+      <Filter>src\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Strategy\TargetUpdate.cpp">
+      <Filter>src\Strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -88,6 +100,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\InputState.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Strategy\AbstractUpdate.h">
+      <Filter>src\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Strategy\BallUpdate.h">
+      <Filter>src\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Strategy\TargetUpdate.h">
+      <Filter>src\Strategy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

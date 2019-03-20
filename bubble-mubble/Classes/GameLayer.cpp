@@ -30,14 +30,18 @@ bool GameLayer::init()
   auto spriteCache = SpriteFrameCache::getInstance();
   spriteCache->addSpriteFramesWithFile(Globals::fileNameSpriteSheet);
 
+
+  GraphicComponent* graphic;
+  PhysicComponent*  physic;
+  InputComponent*   input;
+  AbstractUpdate*   customUpdate;
+
   //Add background
-  GraphicComponent* graphic = new GraphicComponent(Globals::fileNameBackground);
+  graphic = new GraphicComponent(Globals::fileNameBackground);
   background_ = std::make_unique<GameObject>(graphic);
   background_->getGraphic()->setAnchorPoint(Vec2::ZERO);
   background_->getGraphic()->setParentNode(this, Globals::BACKGROUND);
  
-  
-
   //Add clock
   graphic = new GraphicComponent(Globals::fileNameClock);
   clock_ = std::make_unique<GameObject>(graphic);
@@ -65,17 +69,23 @@ bool GameLayer::init()
   
   //Add cannon ball to spawner
   graphic = new GraphicComponent(Globals::fileNameCannonBall);
-  PhysicComponent*  physic = new PhysicComponent();
+  physic = new PhysicComponent();
+  input = nullptr;
+  customUpdate = new BallUpdate();
   graphic->setScale(0.2f);
-  auto gameObject = new GameObject(graphic, physic);
+  physic->setSpeed(Globals::BallSpeed);
+  physic->setGravity(cocos2d::Vec2(0, -1.0f));
+  auto gameObject = new GameObject(graphic, physic, input, customUpdate);
   spawner_.addPrototype(gameObject, "ball");
  
 
   //Add target to spawner
   graphic = new GraphicComponent(Globals::fileNameTarget);
   physic = new PhysicComponent();
+  input = nullptr;
+  customUpdate = new BallUpdate();
   graphic->setScale(0.2f);
-  gameObject = new GameObject(graphic, physic);
+  gameObject = new GameObject(graphic, physic, input, customUpdate);
   spawner_.addPrototype(gameObject, "target");
 
   //Add bomb to spawner
@@ -99,7 +109,7 @@ bool GameLayer::init()
   }
 
   //Add cannon
-  InputComponent*   input  = new PlayerInputComponent(&inputState_);
+  input  = new PlayerInputComponent(&inputState_);
   physic = new PhysicComponent();
   graphic = new GraphicComponent(Globals::fileNameCannon);
   cannon_ = std::make_unique<Canon>(&spawner_, "ball", &objectsPool_, this, graphic, physic, input);

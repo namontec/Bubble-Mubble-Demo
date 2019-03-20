@@ -1,10 +1,11 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(GraphicComponent* graphic, PhysicComponent* physic, InputComponent* input)
- : graphic_(std::shared_ptr<GraphicComponent>(graphic)),
-   physic_ (std::shared_ptr<PhysicComponent>(physic)),
-   input_  (std::shared_ptr<InputComponent>(input))
+GameObject::GameObject(GraphicComponent* graphic, PhysicComponent* physic, InputComponent* input, AbstractUpdate* update)
+  : graphic_(std::shared_ptr<GraphicComponent>(graphic)),
+  physic_(std::shared_ptr<PhysicComponent>(physic)),
+  input_(std::shared_ptr<InputComponent>(input)),
+  customUpdate_(std::shared_ptr<AbstractUpdate>(update))
 {
 }
 
@@ -22,6 +23,7 @@ GameObject * GameObject::clone()
   GraphicComponent* graphic = nullptr;
   PhysicComponent*  physic = nullptr;
   InputComponent*   input = nullptr;
+  AbstractUpdate*   customUpdate = nullptr;
 
   if (input_) {
     input = input_->clone();
@@ -35,7 +37,11 @@ GameObject * GameObject::clone()
     graphic = graphic_->clone();
   }
 
-  return new GameObject( graphic, physic, input );
+  if (customUpdate_) {
+    customUpdate = customUpdate_->clone();
+  }
+
+  return new GameObject( graphic, physic, input, customUpdate );
 }
 
 
@@ -52,6 +58,10 @@ void GameObject::update(float deltaTime)
 
   if (graphic_) {
     graphic_->update(this);
+  }
+
+  if (customUpdate_) {
+    customUpdate_->update(this, deltaTime);
   }
 }
 

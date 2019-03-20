@@ -49,16 +49,12 @@ float Canon::getRotation()
 
 void Canon::fireCanon(cocos2d::Vec2 targetPosition)
 {
-  //
-  float acceleration = Globals::BallSpeed;
-  float angle = getRotation();
-  cocos2d::Vec2 direction = cocos2d::Vec2(std::cos(angle), std::sin(angle));
-  //
+  cocos2d::Vec2 direction = (targetPosition - getGraphic()->getPosition()).getNormalized();
 
   auto ball = std::shared_ptr<GameObject>(spawner_->spawn(ballName_));
   ball->getGraphic()->setPosition( getGraphic()->getPosition() );
 
-  ball->getPhysic()->setVelocity(direction * acceleration);
+  ball->getPhysic()->setVelocity( direction * ball->getPhysic()->getSpeed() );
   ball->getGraphic()->setParentNode(parentNode_);
 
   objectsPool_->push_back(ball);

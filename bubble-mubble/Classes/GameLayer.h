@@ -6,6 +6,8 @@
 #include "Canon.h"
 #include "Spawner.h"
 #include "InputState.h"
+#include "Strategy\BallUpdate.h"
+#include "Strategy\TargetUpdate.h"
 
 class GameLayer : public cocos2d::Layer
 {
