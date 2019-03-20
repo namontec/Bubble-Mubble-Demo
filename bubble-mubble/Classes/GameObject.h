@@ -27,11 +27,16 @@ public:
   std::shared_ptr <PhysicComponent> getPhysic();
   std::shared_ptr<GraphicComponent> getGraphic();
 
+  std::shared_ptr<GameObject>       getChild();
+  void setChild(GameObject* gameObject);
+
 protected:
   std::shared_ptr  <InputComponent> input_;
   std::shared_ptr <PhysicComponent> physic_;
   std::shared_ptr<GraphicComponent> graphic_;
 
   std::shared_ptr<AbstractUpdate>   customUpdate_;
+
+  std::shared_ptr<GameObject>       child_;
 };
 

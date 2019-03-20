@@ -79,3 +79,18 @@ std::shared_ptr<GraphicComponent> GameObject::getGraphic()
 {
   return graphic_;
 }
+
+std::shared_ptr<GameObject> GameObject::getChild()
+{
+  return child_;
+}
+
+void GameObject::setChild(GameObject* gameObject)
+{
+  child_ = std::shared_ptr<GameObject>(gameObject);
+
+  bool childNodeAndParentNodeExists = child_->getGraphic() && graphic_;
+  if (childNodeAndParentNodeExists) {
+    child_->getGraphic()->setParentNode(graphic_->getNode());
+  }
+}

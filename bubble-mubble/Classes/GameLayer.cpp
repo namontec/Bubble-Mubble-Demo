@@ -117,7 +117,15 @@ bool GameLayer::init()
   cannon_->getGraphic()->setPosition(Vec2(screenSize_.width / 2, 80));
   cannon_->getGraphic()->setAnchorPoint(Vec2(0.5f, 1.0f / 3.0f));
   cannon_->getGraphic()->setParentNode(this);
+  /////
+  graphic = new GraphicComponent(Globals::fileNameCannonBall);
+  graphic->setAnchorPoint(Vec2(0.5f, 0.5f));
+  graphic->setPosition(Vec2(325, 750));
+  //graphic->setScale(2);
 
+  gameObject = new GameObject(graphic);
+  cannon_->setChild(gameObject);
+  /////
 
   //Add mouse events listener
   auto mouseListener = EventListenerMouse::create();
