@@ -2,6 +2,13 @@
 
 
 
+GraphicComponent::GraphicComponent()
+{
+  //create empty node
+  node_ = cocos2d::Node::create();
+  node_->retain();
+}
+
 GraphicComponent::GraphicComponent(const std::string& fileName)
    : fileName_(fileName)
 {

@@ -6,6 +6,7 @@ class GameObject;
 class GraphicComponent
 {
 public:
+  GraphicComponent();
   GraphicComponent(const std::string& fileName);
   virtual ~GraphicComponent();
 

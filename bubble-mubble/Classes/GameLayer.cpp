@@ -120,12 +120,10 @@ bool GameLayer::init()
   cannon_->getGraphic()->setPosition(Vec2(screenSize_.width / 2, 80));
   cannon_->getGraphic()->setAnchorPoint(Vec2(0.5f, 1.0f / 3.0f));
   cannon_->getGraphic()->setParentNode(this);
-  /////
-  graphic = new GraphicComponent(Globals::fileNameCannonBall);
+  //add spawn position (create empty Node)
+  graphic = new GraphicComponent();
   graphic->setAnchorPoint(Vec2(0.5f, 0.5f));
-  graphic->setPosition(Vec2(325, 750));
-  //graphic->setScale(2);
-
+  graphic->setPosition(Vec2(325, 730));
   gameObject = new GameObject(graphic);
   cannon_->setChild(gameObject);
   /////
@@ -152,8 +150,6 @@ void GameLayer::update(float deltaTime)
     object->update(deltaTime);
   }
 
-  log(("Update: " + std::to_string(deltaTime)).c_str() );
-
   //Perfom Fixed Update for physic events
   fixedTimeCounter += deltaTime;
   while (fixedTimeCounter > fixedTimePeriod) {
@@ -168,7 +164,6 @@ void GameLayer::fixedUpdate(float deltaTime)
     object->fixedUpdate(deltaTime);
   }
 
-  log ( ("Fixed: " + std::to_string(deltaTime)).c_str());
 }
 
 

@@ -52,7 +52,10 @@ void Canon::fireCanon(cocos2d::Vec2 targetPosition)
   cocos2d::Vec2 direction = (targetPosition - getGraphic()->getPosition()).getNormalized();
 
   auto ball = std::shared_ptr<GameObject>(spawner_->spawn(ballName_));
-  ball->getGraphic()->setPosition( getGraphic()->getPosition() );
+
+  
+  auto ballSpawnPosition = getGraphic()->getNode()->convertToWorldSpace( getChild()->getGraphic()->getPosition() );
+  ball->getGraphic()->setPosition( ballSpawnPosition );
 
   ball->getPhysic()->setVelocity( direction * ball->getPhysic()->getSpeed() );
   ball->getGraphic()->setParentNode(parentNode_);
