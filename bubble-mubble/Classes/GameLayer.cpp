@@ -23,6 +23,7 @@ bool GameLayer::init()
 
   //initialize variables
   screenSize_ = Director::getInstance()->getWinSize();
+  isGameOver_ = false;
   score_ = 0;
   timer_ = Globals::timer;
   inputState_.setMousePosition(Vec2(screenSize_.width / 2, screenSize_.height / 2));
@@ -46,9 +47,17 @@ bool GameLayer::init()
   //Add clock
   graphic = new GraphicComponent(Globals::fileNameClock);
   clock_ = std::make_unique<GameObject>(graphic);
+  clock_->getGraphic()->setAnchorPoint(Vec2(0.5f, 0.5f));
   clock_->getGraphic()->setScale(0.5f);
-  clock_->getGraphic()->setPosition(Vec2(clock_->getGraphic()->getNode()->getBoundingBox().size.width, screenSize_.height));
-  clock_->getGraphic()->setParentNode(this, Globals::FOREGROUND);
+  auto clockSize = clock_->getGraphic()->getNode()->getBoundingBox().size;
+  clock_->getGraphic()->setPosition(Vec2(screenSize_.width / 2 - clockSize.width / 2, screenSize_.height - clockSize.height / 1.8f));
+  clock_->getGraphic()->setParentNode(this, Globals::BACKGROUND);
+  
+  //Add clock timer Label
+  timerLabel_ = Label::createWithTTF(std::to_string(timer_), "fonts/Marker Felt.ttf", 60);
+  timerLabel_->setPosition(Vec2(screenSize_.width / 2 + timerLabel_->getBoundingBox().size.width / 2, screenSize_.height - timerLabel_->getBoundingBox().size.height));
+  this->addChild(timerLabel_);
+
   
 
   //Add cannon stand
@@ -142,6 +151,12 @@ bool GameLayer::init()
 
 void GameLayer::update(float deltaTime)
 {
+
+  if (timer_ < 0) {
+    isGameOver_ = true;
+    return;
+  }
+
   cannon_->update(deltaTime);
 
   aim_->getGraphic()->setPosition(getMousePosition());
@@ -156,6 +171,14 @@ void GameLayer::update(float deltaTime)
     fixedUpdate(fixedTimePeriod);
     fixedTimeCounter -= fixedTimePeriod;
   }
+
+
+  timer_ -= deltaTime;
+  int intTimer = floor(timer_+1);
+  timerLabel_->setString(std::to_string(intTimer));
+
+
+
 }
 
 void GameLayer::fixedUpdate(float deltaTime)
