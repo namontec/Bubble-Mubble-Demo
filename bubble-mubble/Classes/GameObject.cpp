@@ -26,7 +26,7 @@ GameObject * GameObject::clone()
   InputComponent*   input = nullptr;
   AbstractUpdate*   customUpdate = nullptr;
 
-  if (input_) {
+  if (input_) { 
     input = input_->clone();
   }
 
@@ -42,7 +42,13 @@ GameObject * GameObject::clone()
     customUpdate = customUpdate_->clone();
   }
 
-  return new GameObject( graphic, physic, input, customUpdate );
+  //create clone of GameObject
+  auto object = new GameObject(graphic, physic, input, customUpdate);
+
+  //clone some variables
+  object->setTag(tag_);
+
+  return object ;
 }
 
 
@@ -73,6 +79,7 @@ void GameObject::fixedUpdate(float deltaTime)
   }
 }
 
+
 std::shared_ptr<InputComponent> GameObject::getInput()
 {
   return input_;
@@ -92,6 +99,19 @@ std::shared_ptr<GameObject> GameObject::getChild()
 {
   return child_;
 }
+
+
+inline void GameObject::setTag(int tag)
+{
+  tag_ = tag;
+}
+
+
+int GameObject::getTag()
+{
+  return tag_;
+}
+
 
 void GameObject::setChild(GameObject* gameObject)
 {

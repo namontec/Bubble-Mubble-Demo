@@ -77,6 +77,7 @@ bool GameLayer::init()
   physic->setSpeed(Globals::BallSpeed);
   physic->setGravity(cocos2d::Vec2(0, Globals::Gravity));
   auto gameObject = new GameObject(graphic, physic, input, customUpdate);
+  gameObject->setTag(Globals::CANNONBALL);
   spawner_.addPrototype(gameObject, "ball");
  
 
@@ -87,6 +88,7 @@ bool GameLayer::init()
   customUpdate = new BallUpdate();
   graphic->setScale(0.2f);
   gameObject = new GameObject(graphic, physic, input, customUpdate);
+  gameObject->setTag(Globals::TARGET);
   spawner_.addPrototype(gameObject, "target");
 
   //Add bomb to spawner

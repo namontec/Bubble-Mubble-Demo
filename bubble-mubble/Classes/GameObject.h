@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include "cocos2d.h"
+#include "Globals.h"
 #include "Components\PhysicComponent.h"
 #include "Components\GraphicComponent.h"
 #include "Components\InputComponent.h"
@@ -31,6 +32,9 @@ public:
   std::shared_ptr<GameObject>       getChild();
   void setChild(GameObject* gameObject);
 
+  void setTag(int tag);
+  int  getTag();
+
 protected:
   std::shared_ptr  <InputComponent> input_;
   std::shared_ptr <PhysicComponent> physic_;
@@ -39,6 +43,8 @@ protected:
   std::shared_ptr<AbstractUpdate>   customUpdate_;
 
   std::shared_ptr<GameObject>       child_;
+
+  int tag_{ Globals::NONE };
 
   bool  isReadyToDie{ false };
 };
