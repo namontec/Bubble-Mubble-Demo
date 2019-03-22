@@ -8,7 +8,9 @@ const int Globals::framesPerSecond = 60;
 
 const int Globals::timer = 50;
 const int Globals::CountTarget = 20;
-const int Globals::BallSpeed = 100;
+const int Globals::BallSpeed = 300;
+
+const float Globals::Gravity = -2.3f;
 
 const std::string Globals::fileNameSpriteSheet  { "sprites.plist" };
 const std::string Globals::fileNameBackground   { "background.png" };

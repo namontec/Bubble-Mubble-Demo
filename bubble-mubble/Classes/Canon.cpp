@@ -66,10 +66,19 @@ void Canon::update(float deltatime)
   auto mousePosition = getInput()->getInputState()->getMousePosition();
   setRotationToVector(mousePosition);
 
+  bool waitForCoolDown = coolTimer > 0;
+  if (waitForCoolDown) {
+    coolTimer -= deltatime;
+  }
 
   bool mouseIsDown = getInput()->getInputState()->getMouseDown();
   if (mouseIsDown) {
-    fireCanon (mousePosition);
+    bool readyToFire = coolTimer <= 0;
+    if (readyToFire) {
+      coolTimer += coolTimeInterval;
+      fireCanon(mousePosition);
+    }
+
   }
 
 }

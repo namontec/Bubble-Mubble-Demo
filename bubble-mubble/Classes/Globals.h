@@ -20,6 +20,8 @@ public:
   const static int CountTarget;
   const static int BallSpeed;
 
+  const static float Gravity;
+
   const static std::string fileNameSpriteSheet;
   const static std::string fileNameBackground;
   const static std::string fileNameAim;
@@ -37,6 +39,11 @@ public:
     FOREGROUND = 1
   };
 
+  enum {
+    NONE,
+    CANNONBALL,
+    TARGET
+  };
 
 };
 

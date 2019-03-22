@@ -19,7 +19,6 @@ void PhysicComponent::update(GameObject* gameObject, float deltaTime)
   if (graphic) {
     auto position = graphic->getPosition();
     position += velocity_ * deltaTime;
-    //position += gravity_;
     graphic->setPosition(position);
   }
 }
@@ -27,13 +26,8 @@ void PhysicComponent::update(GameObject* gameObject, float deltaTime)
 
 void PhysicComponent::fixedUpdate(GameObject * gameObject, float deltaTime)
 {
-  //add gravity to current position every fixedUpdate
-  auto graphic = gameObject->getGraphic();
-  if (graphic) {
-    auto position = graphic->getPosition();
-    position += gravity_;
-    graphic->setPosition(position);
-  }
+  //add gravity to velocity every fixedUpdate
+  velocity_ += gravity_;
 }
 
 

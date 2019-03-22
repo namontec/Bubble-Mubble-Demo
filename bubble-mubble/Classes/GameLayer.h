@@ -17,6 +17,7 @@ public:
   CREATE_FUNC(GameLayer);
 
   virtual void update(float deltaTime) override;
+  virtual void fixedUpdate(float delatatine);
 
   const cocos2d::Vec2 getMousePosition();
   void onMouseMove(cocos2d::Event *event);
@@ -41,6 +42,10 @@ private:
   Spawner spawner_;
 
   std::list<std::shared_ptr<GameObject>> objectsPool_;
+
+  //fixed update variables
+  const float fixedTimePeriod{ 1.0f / 30.0f };
+  float fixedTimeCounter{ 0 };
 };
 
 

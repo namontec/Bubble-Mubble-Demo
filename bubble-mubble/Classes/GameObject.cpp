@@ -12,9 +12,10 @@ GameObject::GameObject(GraphicComponent* graphic, PhysicComponent* physic, Input
 
 GameObject::~GameObject()
 {
-
+  if (graphic_) {
+    graphic_->getNode()->removeFromParent();
+  }
 }
-
 
 
 
@@ -62,6 +63,13 @@ void GameObject::update(float deltaTime)
 
   if (customUpdate_) {
     customUpdate_->update(this, deltaTime);
+  }
+}
+
+void GameObject::fixedUpdate(float deltaTime)
+{
+  if (physic_) {
+    physic_->fixedUpdate(this, deltaTime);
   }
 }
 

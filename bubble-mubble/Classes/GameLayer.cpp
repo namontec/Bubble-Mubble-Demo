@@ -1,6 +1,7 @@
 #include "GameLayer.h"
 #include "Globals.h"
 #include <memory>
+#include <iostream>
 //#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
@@ -67,14 +68,14 @@ bool GameLayer::init()
   aim_->getGraphic()->setParentNode(this, Globals::FOREGROUND);
   
   
-  //Add cannon ball to spawner
+  //Add cannon Ball to spawner
   graphic = new GraphicComponent(Globals::fileNameCannonBall);
   physic = new PhysicComponent();
   input = nullptr;
   customUpdate = new BallUpdate();
   graphic->setScale(0.2f);
   physic->setSpeed(Globals::BallSpeed);
-  physic->setGravity(cocos2d::Vec2(0, -1.0f));
+  physic->setGravity(cocos2d::Vec2(0, Globals::Gravity));
   auto gameObject = new GameObject(graphic, physic, input, customUpdate);
   spawner_.addPrototype(gameObject, "ball");
  
@@ -148,6 +149,24 @@ void GameLayer::update(float deltaTime)
   for (auto object : objectsPool_) {
     object->update(deltaTime);
   }
+
+  log(("Update: " + std::to_string(deltaTime)).c_str() );
+
+  //Perfom Fixed Update for physic events
+  fixedTimeCounter += deltaTime;
+  while (fixedTimeCounter > fixedTimePeriod) {
+    fixedUpdate(fixedTimePeriod);
+    fixedTimeCounter -= fixedTimePeriod;
+  }
+}
+
+void GameLayer::fixedUpdate(float deltaTime)
+{
+  for (auto object : objectsPool_) {
+    object->fixedUpdate(deltaTime);
+  }
+
+  log ( ("Fixed: " + std::to_string(deltaTime)).c_str());
 }
 
 
