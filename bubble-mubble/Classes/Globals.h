@@ -44,7 +44,8 @@ public:
   enum {
     NONE,
     CANNONBALL,
-    TARGET
+    TARGET,
+    CANNON
   };
 
 };

@@ -38,14 +38,11 @@ private:
   int   timer_;
   bool  isGameOver_;
 
-  std::unique_ptr<Canon>      cannon2_;
-
-  std::vector<std::unique_ptr<Canon>> cannons;
   //std::unique_ptr<Canon>      cannon_;
   std::unique_ptr<GameObject> aim_;
   std::unique_ptr<GameObject> background_;
   std::unique_ptr<GameObject> clock_;
-  std::unique_ptr<GameObject> cannonStand_;
+  //std::unique_ptr<GameObject> cannonStand_;
   cocos2d::Label*             timerLabel_;
 
   Spawner spawner_;

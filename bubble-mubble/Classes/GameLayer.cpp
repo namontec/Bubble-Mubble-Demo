@@ -29,6 +29,7 @@ bool GameLayer::init()
   timer_ = Globals::timer;
   inputState_.setMousePosition(Vec2(screenSize_.width / 2, screenSize_.height / 2));
 
+  //Initialize sprites (spawner_)
   initSprites();
  
   //Spawn Background
@@ -37,41 +38,18 @@ bool GameLayer::init()
 
   //Spawn Clock
   clock_ = std::unique_ptr<GameObject>(spawner_.spawn("clock"));
-  clock_->getGraphic()->setParentNode(this, Globals::BACKGROUND);
+  clock_->getGraphic()->setParentNode(this, Globals::FOREGROUND);
 
   //Add clock timer Label
   timerLabel_ = Label::createWithTTF(std::to_string(timer_), "fonts/Marker Felt.ttf", 60);
   timerLabel_->setPosition(Vec2(screenSize_.width / 2 + timerLabel_->getBoundingBox().size.width / 2, screenSize_.height - timerLabel_->getBoundingBox().size.height));
   timerLabel_->setHorizontalAlignment(TextHAlignment::LEFT);
-  this->addChild(timerLabel_);
-
-
+  this->addChild(timerLabel_, Globals::FOREGROUND);
 
   //Spawn Cursor Aim
   aim_ = std::unique_ptr<GameObject>(spawner_.spawn("aim"));
   aim_->getGraphic()->setParentNode(this, Globals::FOREGROUND);
-  
-  //cannon_ = std::unique_ptr<Canon>(static_cast<Canon*>(spawner_.spawn("cannon")));
-  //cannon_->getGraphic()->setParentNode(this);
-
-  //cannon2_ = std::unique_ptr<Canon>(static_cast<Canon*>(spawner_.spawn("cannon")));
-  //cannon2_->getGraphic()->setPosition(Vec2(screenSize_.width / 4, 80));
-  //cannon2_->getGraphic()->setParentNode(this);
-
-  for (int i = 0; i < Globals::NumberOfCannons; i++) {
-    int x = screenSize_.width / (Globals::NumberOfCannons + 1) * (i + 1);
-
-    auto object = std::shared_ptr<GameObject>(spawner_.spawn("stand"));
-    object->getGraphic()->setPosition(Vec2(x, 40));
-    object->getGraphic()->setParentNode(this);
-    objectsPool_.push_back(object);
-
-    object = std::shared_ptr<Canon>(static_cast<Canon*>(spawner_.spawn("cannon")));
-    object->getGraphic()->setPosition(Vec2(x , 80));
-    object->getGraphic()->setParentNode(this);
-    objectsPool_.push_back(object);
-
-  }
+ 
 
   //Spawn Targets
   int   x, y, angle;
@@ -98,6 +76,22 @@ bool GameLayer::init()
     objectsPool_.push_back(std::shared_ptr<GameObject>(gameObject));
   }
 
+
+  //Spawn Cannons
+  for (int i = 0; i < Globals::NumberOfCannons; i++) {
+    int x = screenSize_.width / (Globals::NumberOfCannons + 1) * (i + 1);
+
+    auto object = std::shared_ptr<GameObject>(spawner_.spawn("stand"));
+    object->getGraphic()->setPosition(Vec2(x, 40));
+    object->getGraphic()->setParentNode(this, Globals::BACKGROUND);
+    objectsPool_.push_back(object);
+
+    object = std::shared_ptr<Canon>(static_cast<Canon*>(spawner_.spawn("cannon")));
+    object->getGraphic()->setPosition(Vec2(x, 80));
+    object->getGraphic()->setParentNode(this);
+    objectsPool_.push_back(object);
+  }
+
   //Add mouse events listener
   auto mouseListener = EventListenerMouse::create();
   mouseListener->onMouseMove = CC_CALLBACK_1(GameLayer::onMouseMove, this);
@@ -120,10 +114,7 @@ void GameLayer::update(float deltaTime)
     return;
   }
 
-  
-  //cannon_->update(deltaTime);
-  //cannon2_->update(deltaTime);
-
+  //Update or delete objects from pool
   for (auto p = objectsPool_.begin(); p != objectsPool_.end(); p++) {
 
     if ((*p)->isReadyToDie) {
@@ -155,13 +146,33 @@ void GameLayer::fixedUpdate(float deltaTime)
 
   for (auto p = objectsPool_.begin(); p != objectsPool_.end(); p++) {
     auto tag = (*p)->getTag();
-    //check bounds
+    //Check bounds
+    auto objectPos = (*p)->getGraphic()->getPosition();
+    auto objectSize = (*p)->getGraphic()->getNode()->getBoundingBox().size;
     if (tag == Globals::CANNONBALL) {
 
+      bool behindLeft = (objectPos.x + objectSize.width / 2) < 0;
+      bool behindRight = (objectPos.x - objectSize.width / 2) > screenSize_.width;
+      bool belowBottom = (objectPos.y + objectSize.height / 2) < 0;
+      if (behindLeft || behindRight || belowBottom) {
+        (*p)->isReadyToDie = true;
+      }
     }
     else if (tag == Globals::TARGET) {
 
+      bool touchLeft = (objectPos.x - (objectSize.width / 2)) <= 0;
+      bool touchRight = (objectPos.x + (objectSize.width / 2)) >= screenSize_.width;
+      bool touchBottom = (objectPos.y - (objectSize.height / 2)) <= 0;
+      bool touchTop = (objectPos.y + (objectSize.height / 2)) >= screenSize_.height;
+      auto velocity = (*p)->getPhysic()->getVelocity();
+      if (touchLeft || touchRight) {
+        (*p)->getPhysic()->setVelocity(Vec2(-velocity.x, velocity.y));
+      }
+      if (touchBottom || touchTop) {
+        (*p)->getPhysic()->setVelocity(Vec2(velocity.x, -velocity.y));
+      }
     }
+
     //compare (*p) object with others
     for (auto p2 = p; p2 != objectsPool_.end(); p2++) {
 
@@ -299,6 +310,7 @@ void GameLayer::initSprites()
   gameObject->getGraphic()->setScale(0.2f);
   gameObject->getGraphic()->setPosition(Vec2(screenSize_.width / 2, 80));
   gameObject->getGraphic()->setAnchorPoint(Vec2(0.5f, 1.0f / 3.0f));
+  gameObject->setTag(Globals::CANNON);
   //add spawn position (create empty Node)
   graphic = new GraphicComponent();
   graphic->setAnchorPoint(Vec2(0.5f, 0.5f));
