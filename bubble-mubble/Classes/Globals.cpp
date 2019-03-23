@@ -10,6 +10,8 @@ const int Globals::timer = 50;
 const int Globals::CountTarget = 20;
 const int Globals::BallSpeed = 300;
 
+int Globals::NumberOfCannons = 1;
+
 const float Globals::Gravity = -2.5f;
 
 const std::string Globals::fileNameSpriteSheet  { "sprites.plist" };

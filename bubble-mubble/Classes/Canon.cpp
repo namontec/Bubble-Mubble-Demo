@@ -64,6 +64,44 @@ void Canon::fireCanon(cocos2d::Vec2 targetPosition)
 }
 
 
+GameObject * Canon::clone()
+{
+  GraphicComponent* graphic = nullptr;
+  PhysicComponent*  physic = nullptr;
+  InputComponent*   input = nullptr;
+  AbstractUpdate*   customUpdate = nullptr;
+
+  if (input_) {
+    input = input_->clone();
+  }
+
+  if (physic_) {
+    physic = physic_->clone();
+  }
+
+  if (graphic_) {
+    graphic = graphic_->clone();
+  }
+
+  if (customUpdate_) {
+    customUpdate = customUpdate_->clone();
+  }
+
+  //create clone of GameObject
+  auto object = new Canon(spawner_, ballName_, objectsPool_, parentNode_, graphic, physic, input);
+
+  //clone some variables
+  object->setTag(tag_);
+
+  //clone child object
+  if (getChild()) {
+    auto childObject = getChild()->clone();
+    object->setChild(childObject);
+  }
+
+  return object;
+}
+
 void Canon::update(float deltatime)
 {
   auto mousePosition = getInput()->getInputState()->getMousePosition();

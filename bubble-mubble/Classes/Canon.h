@@ -22,6 +22,7 @@ public:
 
   void fireCanon(cocos2d::Vec2 direction);
 
+  virtual GameObject* clone() override;
   virtual void update(float deltatime) override;
 
 private:

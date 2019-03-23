@@ -35,17 +35,17 @@ public:
   void setTag(int tag);
   int  getTag();
 
+  bool  isReadyToDie{ false };
+
 protected:
   std::shared_ptr  <InputComponent> input_;
   std::shared_ptr <PhysicComponent> physic_;
   std::shared_ptr<GraphicComponent> graphic_;
-
   std::shared_ptr<AbstractUpdate>   customUpdate_;
 
   std::shared_ptr<GameObject>       child_;
 
   int tag_{ Globals::NONE };
 
-  bool  isReadyToDie{ false };
 };
 

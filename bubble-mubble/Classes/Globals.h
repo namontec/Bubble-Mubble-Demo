@@ -20,6 +20,8 @@ public:
   const static int CountTarget;
   const static int BallSpeed;
 
+  static int      NumberOfCannons;
+
   const static float Gravity;
 
   const static std::string fileNameSpriteSheet;

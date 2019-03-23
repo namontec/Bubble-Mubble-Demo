@@ -98,11 +98,20 @@ void GraphicComponent::update(GameObject* gameObject)
 
 GraphicComponent * GraphicComponent::clone()
 {
-  auto gameObject = new GraphicComponent(fileName_);
-  gameObject->setScale(getScale());
-  gameObject->setRotation(getRotation());
-  gameObject->setAnchorPoint(getAnchorPoint());
-  gameObject->setPosition(getPosition());
+  GraphicComponent* component;
 
-  return gameObject;
+  bool hasFileName = !fileName_.empty();
+  if (hasFileName) {
+    component = new GraphicComponent(fileName_);
+  }
+  else {
+    component = new GraphicComponent();
+  }
+
+  component->setScale(getScale());
+  component->setRotation(getRotation());
+  component->setAnchorPoint(getAnchorPoint());
+  component->setPosition(getPosition());
+
+  return component;
 }

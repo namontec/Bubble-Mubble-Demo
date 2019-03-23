@@ -24,6 +24,10 @@ public:
   void onMouseDown(cocos2d::Event *event);
   void onMouseUp(cocos2d::Event *event);
 
+  void startTimer(cocos2d::Label* label);
+  void initSprites();
+
+
   std::list<std::shared_ptr<GameObject>>* getObjectPool();
 
 private:
@@ -31,10 +35,13 @@ private:
   InputState inputState_;
 
   int   score_;
-  float timer_;
+  int   timer_;
   bool  isGameOver_;
 
-  std::unique_ptr<Canon>      cannon_;
+  std::unique_ptr<Canon>      cannon2_;
+
+  std::vector<std::unique_ptr<Canon>> cannons;
+  //std::unique_ptr<Canon>      cannon_;
   std::unique_ptr<GameObject> aim_;
   std::unique_ptr<GameObject> background_;
   std::unique_ptr<GameObject> clock_;
