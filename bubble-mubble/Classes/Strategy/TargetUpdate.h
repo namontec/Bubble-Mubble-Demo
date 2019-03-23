@@ -9,6 +9,6 @@ public:
 
   virtual void update(GameObject* gameObject, float deltaTime) override;
 
-  AbstractUpdate* clone();
+  AbstractUpdate* clone() override;
 };
 

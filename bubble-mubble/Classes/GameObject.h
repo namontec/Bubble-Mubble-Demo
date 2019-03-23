@@ -24,6 +24,8 @@ public:
   virtual GameObject* clone();
   virtual void        update(float deltaTime);
   virtual void   fixedUpdate(float deltaTime);
+  
+  bool intersectsObject(std::shared_ptr<GameObject> gameObject);
 
   std::shared_ptr  <InputComponent> getInput();
   std::shared_ptr <PhysicComponent> getPhysic();

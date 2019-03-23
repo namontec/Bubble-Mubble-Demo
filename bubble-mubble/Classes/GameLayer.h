@@ -13,7 +13,7 @@ class GameLayer : public cocos2d::Layer
 {
 public:
   static cocos2d::Scene* createScene();
-  virtual bool init();
+  virtual bool init() override;
   CREATE_FUNC(GameLayer);
 
   virtual void update(float deltaTime) override;
@@ -26,6 +26,8 @@ public:
 
   void startTimer(cocos2d::Label* label);
   void initSprites();
+
+  void checkBounds(std::shared_ptr<GameObject> gameObject);
 
 
   std::list<std::shared_ptr<GameObject>>* getObjectPool();
@@ -52,6 +54,8 @@ private:
   //fixed update variables
   const float fixedTimePeriod{ 1.0f / 30.0f };
   float fixedTimeCounter{ 0 };
+
+
 };
 
 

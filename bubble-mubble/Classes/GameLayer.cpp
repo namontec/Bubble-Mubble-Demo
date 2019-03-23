@@ -52,8 +52,7 @@ bool GameLayer::init()
  
 
   //Spawn Targets
-  int   x, y, angle;
-  float velX, velY;
+  float x, y, velX, velY, angle;
   int   selectedTarget;
   Size  nodeSize;
   GameObject* gameObject;
@@ -145,41 +144,72 @@ void GameLayer::fixedUpdate(float deltaTime)
   }
 
   for (auto p = objectsPool_.begin(); p != objectsPool_.end(); p++) {
-    auto tag = (*p)->getTag();
-    //Check bounds
-    auto objectPos = (*p)->getGraphic()->getPosition();
-    auto objectSize = (*p)->getGraphic()->getNode()->getBoundingBox().size;
-    if (tag == Globals::CANNONBALL) {
 
-      bool behindLeft = (objectPos.x + objectSize.width / 2) < 0;
-      bool behindRight = (objectPos.x - objectSize.width / 2) > screenSize_.width;
-      bool belowBottom = (objectPos.y + objectSize.height / 2) < 0;
-      if (behindLeft || behindRight || belowBottom) {
-        (*p)->isReadyToDie = true;
-      }
-    }
-    else if (tag == Globals::TARGET) {
+    checkBounds(*p);
+    
+    //Compare (*p) object with others objects
+    auto objectTag = (*p)->getTag();
 
-      bool touchLeft = (objectPos.x - (objectSize.width / 2)) <= 0;
-      bool touchRight = (objectPos.x + (objectSize.width / 2)) >= screenSize_.width;
-      bool touchBottom = (objectPos.y - (objectSize.height / 2)) <= 0;
-      bool touchTop = (objectPos.y + (objectSize.height / 2)) >= screenSize_.height;
-      auto velocity = (*p)->getPhysic()->getVelocity();
-      if (touchLeft || touchRight) {
-        (*p)->getPhysic()->setVelocity(Vec2(-velocity.x, velocity.y));
-      }
-      if (touchBottom || touchTop) {
-        (*p)->getPhysic()->setVelocity(Vec2(velocity.x, -velocity.y));
-      }
-    }
-
-    //compare (*p) object with others
     for (auto p2 = p; p2 != objectsPool_.end(); p2++) {
+      if ((*p2) == (*p)) continue;
+;
+      auto otherObjectTag = (*p2)->getTag();
 
+      float isIntersected = (*p)->intersectsObject(*p2);
+      if (isIntersected) {
+
+        bool hitCanonballAndTarget = (objectTag == Globals::CANNONBALL) && (otherObjectTag == Globals::TARGET);
+        bool hitTargetAndCanonball = (objectTag == Globals::TARGET) && (otherObjectTag == Globals::CANNONBALL);
+        bool hitTargetAndTarget = (objectTag == Globals::TARGET) && (otherObjectTag == Globals::TARGET);
+        bool hitTargetAndCannon = (objectTag == Globals::TARGET) && (otherObjectTag == Globals::CANNON);
+        bool hitCannonAndTarget = (objectTag == Globals::CANNON) && (otherObjectTag == Globals::TARGET);
+
+        if (hitCanonballAndTarget) {
+          (*p)->isReadyToDie = true;
+          (*p2)->isReadyToDie = true;
+          continue;
+        }
+        else if (hitTargetAndCanonball) {
+          (*p)->isReadyToDie = true;
+          (*p2)->isReadyToDie = true;
+          continue;
+        }
+        else if (hitTargetAndTarget || hitTargetAndCannon || hitCannonAndTarget) {
+
+          auto vel1 = (*p)->getPhysic()->getVelocity();
+          auto vel2 = (*p2)->getPhysic()->getVelocity();
+          auto pos1 = (*p)->getGraphic()->getPosition();
+          auto pos2 = (*p2)->getGraphic()->getPosition();
+
+          if (pos1.x < pos2.x) {
+            vel1.x = -std::abs(vel1.x);
+            vel2.x = std::abs(vel2.x);
+          }
+          if (pos1.x > pos2.x) {
+            vel1.x = std::abs(vel1.x);
+            vel2.x = -std::abs(vel2.x);
+          }
+          if (pos1.y < pos2.y) {
+            vel1.y = -std::abs(vel1.y);
+            vel2.y = std::abs(vel2.y);
+          }
+          if (pos1.y > pos2.y) {
+            vel1.y = std::abs(vel1.y);
+            vel2.y = -std::abs(vel2.y);
+          }
+
+          (*p)->getPhysic()->setVelocity(Vec2(vel1.x, vel1.y));
+          (*p2)->getPhysic()->setVelocity(Vec2(vel2.x, vel2.y));
+        }
+
+      }
+
+ 
     }
   }
 
-  cocos2d::log(std::to_string(objectsPool_.size()).c_str());
+
+  //cocos2d::log(std::to_string(objectsPool_.size()).c_str());
 }
 
 
@@ -319,6 +349,42 @@ void GameLayer::initSprites()
   gameObject->setChild(gameObjectChild);
   /////
   spawner_.addPrototype(gameObject, "cannon");
+}
+
+//Check bounds of the screen
+void GameLayer::checkBounds(std::shared_ptr<GameObject> gameObject)
+{
+  int  objectTag;
+  Vec2 objectPos;
+  Size objectSize;
+
+  objectTag = gameObject->getTag();
+
+  objectPos = gameObject->getGraphic()->getPosition();
+  objectSize = gameObject->getGraphic()->getNode()->getBoundingBox().size;
+  if (objectTag == Globals::CANNONBALL) {
+
+    bool behindLeft = (objectPos.x + objectSize.width / 2) < 0;
+    bool behindRight = (objectPos.x - objectSize.width / 2) > screenSize_.width;
+    bool belowBottom = (objectPos.y + objectSize.height / 2) < 0;
+    if (behindLeft || behindRight || belowBottom) {
+      gameObject->isReadyToDie = true;
+    }
+  }
+  else if (objectTag == Globals::TARGET) {
+
+    bool touchLeft = (objectPos.x - (objectSize.width / 2)) <= 0;
+    bool touchRight = (objectPos.x + (objectSize.width / 2)) >= screenSize_.width;
+    bool touchBottom = (objectPos.y - (objectSize.height / 2)) <= 0;
+    bool touchTop = (objectPos.y + (objectSize.height / 2)) >= screenSize_.height;
+    auto velocity = gameObject->getPhysic()->getVelocity();
+    if (touchLeft || touchRight) {
+      gameObject->getPhysic()->setVelocity(Vec2(-velocity.x, velocity.y));
+    }
+    if (touchBottom || touchTop) {
+      gameObject->getPhysic()->setVelocity(Vec2(velocity.x, -velocity.y));
+    }
+  }
 }
 
 

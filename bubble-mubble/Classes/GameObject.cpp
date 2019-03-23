@@ -79,6 +79,24 @@ void GameObject::fixedUpdate(float deltaTime)
   }
 }
 
+bool GameObject::intersectsObject(std::shared_ptr<GameObject> gameObject)
+{
+  //Assume that all objects are round
+  const float reduceBy = 0.0f;
+  auto pos1 = getGraphic()->getPosition();
+  auto pos2 = gameObject->getGraphic()->getPosition();
+  auto size1 = getGraphic()->getNode()->getBoundingBox().size;
+  auto size2 = gameObject->getGraphic()->getNode()->getBoundingBox().size;
+  auto squaredRadius1 = std::pow(std::min(size1.width, size1.height) / 2, 2);
+  auto squaredRadius2 = std::pow(std::min(size2.width, size2.height) / 2, 2);
+  auto len1 = std::abs(pos1.x - pos2.x);
+  auto len2 = std::abs(pos1.y - pos2.y);
+  auto squaredDistance = len1 * len1 + len2 * len2;
+  
+  bool objectsIntersects = (squaredDistance <= (squaredRadius1 + squaredRadius2 - reduceBy));
+  return objectsIntersects;
+}
+
 
 std::shared_ptr<InputComponent> GameObject::getInput()
 {
