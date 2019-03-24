@@ -17,10 +17,13 @@ public:
   virtual bool init() override;
   CREATE_FUNC(GameLayer);
 
+  void initSprites();
   void startTheGame();
 
   virtual void update(float deltaTime) override;
   virtual void fixedUpdate(float delatatine);
+
+  void checkBounds(std::shared_ptr<GameObject> gameObject);
 
   const cocos2d::Vec2 getMousePosition();
   void onMouseMove(cocos2d::Event *event);
@@ -28,9 +31,6 @@ public:
   void onMouseUp(cocos2d::Event *event);
 
   void startTimer(cocos2d::Label* label);
-  void initSprites();
-
-  void checkBounds(std::shared_ptr<GameObject> gameObject);
 
   std::list<std::shared_ptr<GameObject>>* getObjectPool();
 
@@ -43,11 +43,9 @@ private:
   bool  isGameOver_;
   int   targetsLast_;
 
-  //std::unique_ptr<Canon>      cannon_;
   std::unique_ptr<GameObject> aim_;
   std::unique_ptr<GameObject> background_;
   std::unique_ptr<GameObject> clock_;
-  //std::unique_ptr<GameObject> cannonStand_;
   cocos2d::Label*             timerLabel_;
 
   Spawner spawner_;

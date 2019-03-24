@@ -24,6 +24,10 @@ const std::string Globals::fileNameStand        { "Stand.png" };
 const std::string Globals::fileNameTarget       { "Target.png" };
 const std::string Globals::fileNameClock        { "Clock.png" };
 
+const std::string Globals::fileNameParticleExplosion {"explosion.plist"};
+const std::string Globals::fileNameParticleSmokeTrail{"smoketrail.plist"};
+
+
 const std::string Globals::fileNameSettings     { "input.txt" };
 
 

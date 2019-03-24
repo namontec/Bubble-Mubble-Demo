@@ -38,7 +38,7 @@ bool GameOverScene::init()
     title = "Game Over";
   }
 
-  std::string totals = "Destroyed " + std::to_string(targetsDestroyed) + " targets from " + std::to_string(targetsTotal);
+  std::string totals = "Destroyed " + std::to_string(targetsDestroyed) + " targets of " + std::to_string(targetsTotal);
 
   auto labelTitle = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 100);
 
@@ -58,7 +58,7 @@ bool GameOverScene::init()
   });
 
   auto menu = Menu::create(itemReplay, nullptr);
-  menu->alignItemsVertically();
+  //menu->alignItemsVertically();
   menu->setPosition(Vec2(size.width / 2, (size.height / 5) * 1.5f));
   this->addChild(menu);
 

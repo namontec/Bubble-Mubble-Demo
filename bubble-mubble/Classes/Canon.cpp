@@ -60,6 +60,15 @@ void Canon::fireCanon(cocos2d::Vec2 targetPosition)
   ball->getPhysic()->setVelocity( direction * ball->getPhysic()->getSpeed() );
   ball->getGraphic()->setParentNode(parentNode_);
 
+  //// ADD PARTICLE
+  auto particleSmokeTrail = cocos2d::ParticleSystemQuad::create(Globals::fileNameParticleSmokeTrail);
+  particleSmokeTrail->setScale(9.0f);
+  particleSmokeTrail->setAnchorPoint(cocos2d::Vec2(0.5f, 0.5f));
+  auto ballSize = ball->getGraphic()->getNode()->getContentSize();
+  particleSmokeTrail->setPosition(cocos2d::Vec2(ballSize.width / 2, ballSize.height / 2));
+  ball->getGraphic()->getNode()->addChild(particleSmokeTrail, Globals::BACKGROUND);
+  ////
+
   objectsPool_->push_back(ball);
 }
 

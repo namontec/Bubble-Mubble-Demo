@@ -31,7 +31,7 @@ private:
   std::list<std::shared_ptr<GameObject>> *objectsPool_;
   cocos2d::Node* parentNode_;
 
-  float coolTimeInterval = 0.5f;
+  float coolTimeInterval = 0.7f;
   float coolTimer{0};
 };
 

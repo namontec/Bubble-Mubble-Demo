@@ -21,7 +21,7 @@ public:
 
   virtual ~GameObject();
 
-  virtual GameObject* clone();
+  virtual GameObject*  clone();
   virtual void        update(float deltaTime);
   virtual void   fixedUpdate(float deltaTime);
   

@@ -34,7 +34,12 @@ public:
   const static std::string fileNameTarget;
   const static std::string fileNameClock;
 
+  const static std::string fileNameParticleExplosion;
+  const static std::string fileNameParticleSmokeTrail;
+
   const static std::string fileNameSettings;
+
+
 
 
   enum {
