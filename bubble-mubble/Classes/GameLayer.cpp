@@ -3,6 +3,7 @@
 #include <memory>
 #include <iostream>
 #include <math.h>
+#include "Settings.h"
 //#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
@@ -25,9 +26,30 @@ bool GameLayer::init()
   //initialize variables
   screenSize_ = Director::getInstance()->getWinSize();
   isGameOver_ = false;
-  score_ = 0;
   timer_ = Globals::timer;
+  score_ = 0;
   inputState_.setMousePosition(Vec2(screenSize_.width / 2, screenSize_.height / 2));
+
+  //Load external variables
+  Settings settings(Globals::fileNameSettings);
+  std::string tempString;
+  settings.init();
+  tempString = settings.getValue("CountTarget");
+  if (!tempString.empty()) {
+    Globals::CountTarget = std::stoi(tempString);
+  }
+  tempString = settings.getValue("Speed");
+  if (!tempString.empty()) {
+    Globals::BallSpeed = std::stoi(tempString);
+  }
+  tempString = settings.getValue("Time");
+  if (!tempString.empty()) {
+    Globals::timer = std::stoi(tempString);
+  }
+  tempString = settings.getValue("NumberOfCannons");
+  if (!tempString.empty()) {
+    Globals::NumberOfCannons = std::stoi(tempString);
+  }
 
   //Initialize sprites (spawner_)
   initSprites();
@@ -70,6 +92,8 @@ bool GameLayer::init()
 
 void GameLayer::startTheGame()
 {
+  timer_ = Globals::timer;
+
   //Spawn Targets
   float x, y, velX, velY, angle;
   int   selectedTarget;

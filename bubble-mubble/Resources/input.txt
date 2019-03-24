@@ -1,0 +1,4 @@
+CountTarget=20 
+Speed=300 
+Time=50
+NumberOfCannons=1

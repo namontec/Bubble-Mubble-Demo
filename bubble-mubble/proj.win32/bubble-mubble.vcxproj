@@ -158,6 +158,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GameObject.cpp" />
     <ClCompile Include="..\Classes\Globals.cpp" />
     <ClCompile Include="..\Classes\InputState.cpp" />
+    <ClCompile Include="..\Classes\Settings.cpp" />
     <ClCompile Include="..\Classes\Spawner.cpp" />
     <ClCompile Include="..\Classes\Strategy\AbstractUpdate.cpp" />
     <ClCompile Include="..\Classes\Strategy\BallUpdate.cpp" />
@@ -175,6 +176,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\GameObject.h" />
     <ClInclude Include="..\Classes\Globals.h" />
     <ClInclude Include="..\Classes\InputState.h" />
+    <ClInclude Include="..\Classes\Settings.h" />
     <ClInclude Include="..\Classes\Spawner.h" />
     <ClInclude Include="..\Classes\Strategy\AbstractUpdate.h" />
     <ClInclude Include="..\Classes\Strategy\BallUpdate.h" />

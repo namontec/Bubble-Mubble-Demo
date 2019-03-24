@@ -63,6 +63,9 @@
     <ClCompile Include="..\Classes\Strategy\TargetUpdate.cpp">
       <Filter>src\Strategy</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Settings.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Strategy\TargetUpdate.h">
       <Filter>src\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Settings.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

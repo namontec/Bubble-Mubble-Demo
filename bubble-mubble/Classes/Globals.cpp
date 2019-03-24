@@ -6,10 +6,9 @@ USING_NS_CC;
 const Size Globals::designResoluton = Size(1024, 768);
 const int Globals::framesPerSecond = 60;
 
-const int Globals::timer = 50;
-const int Globals::CountTarget = 20;
-const int Globals::BallSpeed = 300;
-
+int Globals::timer = 50;
+int Globals::CountTarget = 20;
+int Globals::BallSpeed = 300;
 int Globals::NumberOfCannons = 1;
 
 const float Globals::Gravity = -2.5f;
@@ -23,6 +22,8 @@ const std::string Globals::fileNameCannonBall   { "Cannonball.png" };
 const std::string Globals::fileNameStand        { "Stand.png" };
 const std::string Globals::fileNameTarget       { "Target.png" };
 const std::string Globals::fileNameClock        { "Clock.png" };
+
+const std::string Globals::fileNameSettings     { "input.txt" };
 
 
 Globals::Globals()

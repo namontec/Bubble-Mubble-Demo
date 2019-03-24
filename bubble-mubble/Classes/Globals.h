@@ -16,11 +16,11 @@ public:
   const static cocos2d::Size designResoluton;
   const static int framesPerSecond;
 
-  const static int timer;
-  const static int CountTarget;
-  const static int BallSpeed;
+  static int timer;
+  static int CountTarget;
+  static int BallSpeed;
 
-  static int      NumberOfCannons;
+  static int NumberOfCannons;
 
   const static float Gravity;
 
@@ -33,6 +33,8 @@ public:
   const static std::string fileNameStand;
   const static std::string fileNameTarget;
   const static std::string fileNameClock;
+
+  const static std::string fileNameSettings;
 
 
   enum {
