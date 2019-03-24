@@ -16,6 +16,8 @@ public:
   virtual bool init() override;
   CREATE_FUNC(GameLayer);
 
+  void startTheGame();
+
   virtual void update(float deltaTime) override;
   virtual void fixedUpdate(float delatatine);
 
@@ -28,7 +30,6 @@ public:
   void initSprites();
 
   void checkBounds(std::shared_ptr<GameObject> gameObject);
-
 
   std::list<std::shared_ptr<GameObject>>* getObjectPool();
 

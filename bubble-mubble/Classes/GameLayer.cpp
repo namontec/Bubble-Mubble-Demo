@@ -51,19 +51,38 @@ bool GameLayer::init()
   aim_->getGraphic()->setParentNode(this, Globals::FOREGROUND);
  
 
+
+
+  //Add mouse events listener
+  auto mouseListener = EventListenerMouse::create();
+  mouseListener->onMouseMove = CC_CALLBACK_1(GameLayer::onMouseMove, this);
+  mouseListener->onMouseDown = CC_CALLBACK_1(GameLayer::onMouseDown, this);
+  mouseListener->onMouseUp = CC_CALLBACK_1(GameLayer::onMouseUp, this);
+  _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
+
+  this->scheduleUpdate();
+
+  startTheGame();
+  return true;
+}
+
+
+void GameLayer::startTheGame()
+{
   //Spawn Targets
   float x, y, velX, velY, angle;
   int   selectedTarget;
   Size  nodeSize;
   GameObject* gameObject;
-  std::map<int, std::string> targets{ {1, "target1"}, {2, "target2"} };
+  std::map<int, std::string> targets{ {1, "target1"}, {2, "target2"}, {3, "target3"} };
 
   for (int i = 0; i < Globals::CountTarget; i++) {
-    selectedTarget = Globals::random(1, 2);
+    selectedTarget = Globals::random(1, targets.size());
     gameObject = spawner_.spawn(targets[selectedTarget]);
     nodeSize = gameObject->getGraphic()->getNode()->getBoundingBox().size;
     x = Globals::random(nodeSize.width / 2, screenSize_.width - nodeSize.width / 2);
-    y = Globals::random(nodeSize.width / 2, screenSize_.height - nodeSize.height / 2);
+    y = Globals::random(nodeSize.width / 2 + 60, screenSize_.height - nodeSize.height / 2);
 
     angle = Globals::random(0, 359);
     angle = angle * std::_Pi / 180;
@@ -91,18 +110,8 @@ bool GameLayer::init()
     objectsPool_.push_back(object);
   }
 
-  //Add mouse events listener
-  auto mouseListener = EventListenerMouse::create();
-  mouseListener->onMouseMove = CC_CALLBACK_1(GameLayer::onMouseMove, this);
-  mouseListener->onMouseDown = CC_CALLBACK_1(GameLayer::onMouseDown, this);
-  mouseListener->onMouseUp = CC_CALLBACK_1(GameLayer::onMouseUp, this);
-  _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
-
   startTimer(timerLabel_);
-  this->scheduleUpdate();
-  return true;
 }
-
 
 void GameLayer::update(float deltaTime)
 {
@@ -146,7 +155,7 @@ void GameLayer::fixedUpdate(float deltaTime)
   for (auto p = objectsPool_.begin(); p != objectsPool_.end(); p++) {
 
     checkBounds(*p);
-    
+
     //Compare (*p) object with others objects
     auto objectTag = (*p)->getTag();
 
@@ -322,9 +331,17 @@ void GameLayer::initSprites()
 
   //Add target2 from prototype to spawner
   gameObject = spawner_.spawn("target1");
-  gameObject->getGraphic()->setScale(0.4);
+  gameObject->getGraphic()->setScale(0.3f);
   gameObject->getPhysic()->setSpeed(50.0f);
+  //gameObject->getGraphic()->setColor(Color3B::GREEN);
   spawner_.addPrototype(gameObject, "target2");
+
+  //Add target2 from prototype to spawner
+  gameObject = spawner_.spawn("target1");
+  gameObject->getGraphic()->setScale(0.1f);
+  gameObject->getPhysic()->setSpeed(200.0f);
+  //gameObject->getGraphic()->setColor(Color3B::RED);
+  spawner_.addPrototype(gameObject, "target3");
 
   //Add bomb to spawner
   graphic = new GraphicComponent(Globals::fileNameBomb);
@@ -375,7 +392,7 @@ void GameLayer::checkBounds(std::shared_ptr<GameObject> gameObject)
 
     bool touchLeft = (objectPos.x - (objectSize.width / 2)) <= 0;
     bool touchRight = (objectPos.x + (objectSize.width / 2)) >= screenSize_.width;
-    bool touchBottom = (objectPos.y - (objectSize.height / 2)) <= 0;
+    bool touchBottom = (objectPos.y - (objectSize.height / 2)) <= 60;
     bool touchTop = (objectPos.y + (objectSize.height / 2)) >= screenSize_.height;
     auto velocity = gameObject->getPhysic()->getVelocity();
     if (touchLeft || touchRight) {

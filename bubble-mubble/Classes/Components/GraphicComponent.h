@@ -24,6 +24,9 @@ public:
 
   void            setRotation(float angle);
   float           getRotation();
+
+  void             setColor(cocos2d::Color3B color);
+  cocos2d::Color3B getColor();
   
   virtual void update(GameObject* gameObject);
 

@@ -18,7 +18,6 @@ GameObject::~GameObject()
 }
 
 
-
 GameObject * GameObject::clone()
 {
   GraphicComponent* graphic = nullptr;

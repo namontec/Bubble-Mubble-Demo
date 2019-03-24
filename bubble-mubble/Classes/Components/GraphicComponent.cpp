@@ -90,9 +90,20 @@ float GraphicComponent::getRotation()
   return node_->getRotation();
 }
 
+void GraphicComponent::setColor(cocos2d::Color3B color)
+{
+  node_->setColor(color);
+}
+
+cocos2d::Color3B GraphicComponent::getColor()
+{
+  return node_->getColor();
+}
+
 
 void GraphicComponent::update(GameObject* gameObject)
 {
+  
 }
 
 
@@ -112,6 +123,7 @@ GraphicComponent * GraphicComponent::clone()
   component->setRotation(getRotation());
   component->setAnchorPoint(getAnchorPoint());
   component->setPosition(getPosition());
+  component->setColor(getColor());
 
   return component;
 }
