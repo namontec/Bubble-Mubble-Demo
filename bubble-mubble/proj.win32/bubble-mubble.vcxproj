@@ -156,6 +156,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Components\PlayerInputComponent.cpp" />
     <ClCompile Include="..\Classes\GameLayer.cpp" />
     <ClCompile Include="..\Classes\GameObject.cpp" />
+    <ClCompile Include="..\Classes\GameOverScene.cpp" />
     <ClCompile Include="..\Classes\Globals.cpp" />
     <ClCompile Include="..\Classes\InputState.cpp" />
     <ClCompile Include="..\Classes\Settings.cpp" />
@@ -174,6 +175,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Components\PlayerInputComponent.h" />
     <ClInclude Include="..\Classes\GameLayer.h" />
     <ClInclude Include="..\Classes\GameObject.h" />
+    <ClInclude Include="..\Classes\GameOverScene.h" />
     <ClInclude Include="..\Classes\Globals.h" />
     <ClInclude Include="..\Classes\InputState.h" />
     <ClInclude Include="..\Classes\Settings.h" />

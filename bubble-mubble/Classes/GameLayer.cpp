@@ -22,14 +22,6 @@ bool GameLayer::init()
   if (!Layer::init()) {
     return false;
   }
-
-  //initialize variables
-  screenSize_ = Director::getInstance()->getWinSize();
-  isGameOver_ = false;
-  timer_ = Globals::timer;
-  score_ = 0;
-  inputState_.setMousePosition(Vec2(screenSize_.width / 2, screenSize_.height / 2));
-
   //Load external variables
   Settings settings(Globals::fileNameSettings);
   std::string tempString;
@@ -51,6 +43,15 @@ bool GameLayer::init()
     Globals::NumberOfCannons = std::stoi(tempString);
   }
 
+
+  //initialize variables
+  screenSize_ = Director::getInstance()->getWinSize();
+  isGameOver_ = false;
+  timer_ = Globals::timer;
+  score_ = 0;
+  inputState_.setMousePosition(Vec2(screenSize_.width / 2, screenSize_.height / 2));
+
+
   //Initialize sprites (spawner_)
   initSprites();
  
@@ -64,8 +65,8 @@ bool GameLayer::init()
 
   //Add clock timer Label
   timerLabel_ = Label::createWithTTF(std::to_string(timer_), "fonts/Marker Felt.ttf", 60);
-  timerLabel_->setPosition(Vec2(screenSize_.width / 2 + timerLabel_->getBoundingBox().size.width / 2, screenSize_.height - timerLabel_->getBoundingBox().size.height));
   timerLabel_->setHorizontalAlignment(TextHAlignment::LEFT);
+  timerLabel_->setPosition(Vec2(screenSize_.width / 2 + timerLabel_->getBoundingBox().size.width / 2, screenSize_.height - timerLabel_->getBoundingBox().size.height));
   this->addChild(timerLabel_, Globals::FOREGROUND);
 
   //Spawn Cursor Aim
@@ -92,7 +93,9 @@ bool GameLayer::init()
 
 void GameLayer::startTheGame()
 {
+  objectsPool_.clear();
   timer_ = Globals::timer;
+  targetsLast_ = Globals::CountTarget;
 
   //Spawn Targets
   float x, y, velX, velY, angle;
@@ -134,22 +137,31 @@ void GameLayer::startTheGame()
     objectsPool_.push_back(object);
   }
 
+  isGameOver_ = false;
   startTimer(timerLabel_);
 }
+
 
 void GameLayer::update(float deltaTime)
 {
 
   aim_->getGraphic()->setPosition(getMousePosition());
-
+ 
   if (isGameOver_) {
-    return;
+    auto scene = GameOverScene::createScene();
+    auto transition = TransitionFade::create(2.0f, scene);
+    Director::getInstance()->pushScene(transition);
+
+    startTheGame();
   }
 
   //Update or delete objects from pool
   for (auto p = objectsPool_.begin(); p != objectsPool_.end(); p++) {
 
     if ((*p)->isReadyToDie) {
+      if ((*p)->getTag() == Globals::TARGET) {
+        targetsLast_--;
+      }
       p = objectsPool_.erase(p);
 
       bool pIsEndIterator = (p == objectsPool_.end());
@@ -200,12 +212,10 @@ void GameLayer::fixedUpdate(float deltaTime)
         if (hitCanonballAndTarget) {
           (*p)->isReadyToDie = true;
           (*p2)->isReadyToDie = true;
-          continue;
         }
         else if (hitTargetAndCanonball) {
           (*p)->isReadyToDie = true;
           (*p2)->isReadyToDie = true;
-          continue;
         }
         else if (hitTargetAndTarget || hitTargetAndCannon || hitCannonAndTarget) {
 
@@ -278,7 +288,9 @@ void GameLayer::onMouseUp(cocos2d::Event * event)
 void GameLayer::startTimer(cocos2d::Label * label)
 {
   this->schedule([=](float deltaTime) {
-    if (timer_ < 0) {
+    bool allTargetsDestroyed = (targetsLast_ <= 0);
+
+    if ((timer_ < 0) || allTargetsDestroyed) {
       this->unschedule("timerTick");
       isGameOver_ = true;
       return;

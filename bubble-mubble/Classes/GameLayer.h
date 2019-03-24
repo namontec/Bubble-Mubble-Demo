@@ -8,6 +8,7 @@
 #include "InputState.h"
 #include "Strategy\BallUpdate.h"
 #include "Strategy\TargetUpdate.h"
+#include "GameOverScene.h"
 
 class GameLayer : public cocos2d::Layer
 {
@@ -40,6 +41,7 @@ private:
   int   score_;
   int   timer_;
   bool  isGameOver_;
+  int   targetsLast_;
 
   //std::unique_ptr<Canon>      cannon_;
   std::unique_ptr<GameObject> aim_;
