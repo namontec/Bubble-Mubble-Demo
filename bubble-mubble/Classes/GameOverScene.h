@@ -5,17 +5,15 @@
 class GameOverScene : public cocos2d::Layer
 {
 public:
-  static cocos2d::Scene* createScene(int targetsDestroyed, int targetsTotal);
+  static cocos2d::Scene* createScene();
   virtual bool init();
   CREATE_FUNC(GameOverScene);
 
 
-  int targetsDestroyesd;
-  int targetsTotal;
+  static int targetsDestroyed;
+  static int targetsTotal;
 
 private:
-  Label*  labelTitle_;
-  Label*  labelDestroyed_;
-  Size    screenSize_;
+  cocos2d::Size    screenSize_;
 
 };

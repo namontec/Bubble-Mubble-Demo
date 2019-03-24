@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "Globals.h"
 #include "GameLayer.h"
+#include "GameOverScene.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -60,7 +61,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    director->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / Globals::framesPerSecond);
@@ -68,13 +69,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // Set the design resolution
     glview->setDesignResolutionSize(Globals::designResoluton.width, Globals::designResoluton.height, ResolutionPolicy::NO_BORDER);
 
-    glview->setCursorVisible(false);
-
     register_all_packages();
 
     // create a scene. it's an autorelease object
     auto scene = GameLayer::createScene();
 
+    //auto scene = GameOverScene::createScene();
     // run
     director->runWithScene(scene);
 

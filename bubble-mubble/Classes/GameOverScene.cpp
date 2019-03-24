@@ -1,15 +1,20 @@
 
 #include "GameOverScene.h"
 #include "Globals.h"
+#include "GameLayer.h"
 
 USING_NS_CC;
 
-Scene* GameOverScene::createScene(int tLost, int tTotal)
+int GameOverScene::targetsDestroyed = 0;
+int GameOverScene::targetsTotal = 0;
+
+
+Scene* GameOverScene::createScene()
 {
   auto scene = Scene::create();
   auto layer = GameOverScene::create();
-  layer->targetsDestroyesd = tTotal - tLost;
-  layer->targetsTotal = tTotal;
+
+
   scene->addChild(layer);
   return scene;
 }
@@ -21,28 +26,44 @@ bool GameOverScene::init()
  }
 
   auto size = Director::getInstance()->getWinSize();
+  Director::getInstance()->getOpenGLView()->setCursorVisible(true);
 
   //Add labels
   std::string title;
-  bool win = targetsDestroyesd <= 0;
+  bool win = (targetsDestroyed == targetsTotal);
   if (win) {
-    title = "Congratulations! You WIN!";
+    title = "Congratulations!";
   }
   else {
-    title = "Game Over! You LOSE!";
+    title = "Game Over";
   }
 
-  std::string totals = "Destroyed " + std::to_string(targetsDestroyesd) + "from " + std::to_string(targetsTotal);
+  std::string totals = "Destroyed " + std::to_string(targetsDestroyed) + " targets from " + std::to_string(targetsTotal);
 
-  labelTitle_ = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 180);
-  labelTitle_->setHorizontalAlignment(TextHAlignment::CENTER);
-  labelTitle_->setPosition(screenSize_ /2);
-  this->addChild(labelTitle_, Globals::FOREGROUND);
+  auto labelTitle = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 100);
 
-  labelDestroyed_ = Label::createWithTTF(totals, "font/Marker felt.ttf", 80);
-  labelDestroyed_->setHorizontalAlignment(TextHAlignment::CENTER);
-  labelDestroyed_->setPosition(Vec2(screenSize_.width / 2 + labelDestroyed_->getBoundingBox().size.width / 2, screenSize_.height - timerLabel_->getBoundingBox().size.height));
-  this->addChild(timerLabel_, Globals::FOREGROUND);
+  labelTitle->setPosition(Vec2(size.width / 2, (size.height / 5) * 4));
+  this->addChild(labelTitle);
+
+  auto labelDestroyed = Label::createWithTTF(totals, "fonts/Marker Felt.ttf", 50);
+
+  labelDestroyed->setPosition(Vec2(size.width / 2, (size.height / 5) *3));
+  this->addChild(labelDestroyed);
+
+
+
+  auto itemReplay = MenuItemFont::create("Replay", [](Ref* sender) {
+    auto scene = GameLayer::createScene();
+    Director::getInstance()->replaceScene(scene);
+  });
+
+  auto menu = Menu::create(itemReplay, nullptr);
+  menu->alignItemsVertically();
+  menu->setPosition(Vec2(size.width / 2, (size.height / 5) * 1.5f));
+  this->addChild(menu);
+
   return true;
 }
+
+
 

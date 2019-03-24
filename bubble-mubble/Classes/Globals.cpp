@@ -13,6 +13,7 @@ int Globals::NumberOfCannons = 1;
 
 const float Globals::Gravity = -2.5f;
 
+
 const std::string Globals::fileNameSpriteSheet  { "sprites.plist" };
 const std::string Globals::fileNameBackground   { "background.png" };
 const std::string Globals::fileNameAim          { "Aim.png" };

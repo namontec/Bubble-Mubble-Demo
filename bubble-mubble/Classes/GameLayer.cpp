@@ -3,6 +3,7 @@
 #include <memory>
 #include <iostream>
 #include <math.h>
+#include <chrono>
 #include "Settings.h"
 //#include "SimpleAudioEngine.h"
 
@@ -93,6 +94,8 @@ bool GameLayer::init()
 
 void GameLayer::startTheGame()
 {
+  Director::getInstance()->getOpenGLView()->setCursorVisible(false);
+
   objectsPool_.clear();
   timer_ = Globals::timer;
   targetsLast_ = Globals::CountTarget;
@@ -148,11 +151,11 @@ void GameLayer::update(float deltaTime)
   aim_->getGraphic()->setPosition(getMousePosition());
  
   if (isGameOver_) {
-    auto scene = GameOverScene::createScene();
-    auto transition = TransitionFade::create(2.0f, scene);
-    Director::getInstance()->pushScene(transition);
+    GameOverScene::targetsDestroyed = Globals::CountTarget - targetsLast_;
+    GameOverScene::targetsTotal = Globals::CountTarget;
 
-    startTheGame();
+    auto scene = GameOverScene::createScene();
+    Director::getInstance()->replaceScene(scene);
   }
 
   //Update or delete objects from pool
@@ -178,9 +181,8 @@ void GameLayer::update(float deltaTime)
     fixedUpdate(fixedTimePeriod);
     fixedTimeCounter -= fixedTimePeriod;
   }
-
-
 }
+
 
 void GameLayer::fixedUpdate(float deltaTime)
 {
@@ -244,15 +246,9 @@ void GameLayer::fixedUpdate(float deltaTime)
           (*p)->getPhysic()->setVelocity(Vec2(vel1.x, vel1.y));
           (*p2)->getPhysic()->setVelocity(Vec2(vel2.x, vel2.y));
         }
-
       }
-
- 
     }
   }
-
-
-  //cocos2d::log(std::to_string(objectsPool_.size()).c_str());
 }
 
 
@@ -300,6 +296,7 @@ void GameLayer::startTimer(cocos2d::Label * label)
 
   }, 1.0f, "timerTick");
 }
+
 
 void GameLayer::initSprites()
 {
