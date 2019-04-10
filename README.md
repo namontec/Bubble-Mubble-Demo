@@ -36,3 +36,23 @@ Time=50
  
 Это означает, что на экране изначально присутствуют 20 мишеней, снаряд летит со                        
 скоростью 50 пикселей в секунду, на игру отведено 50 секунд. 
+
+### Инструменты
+Visual Studio 2017
+
+Coco2d-x 3.17.1
+
+
+
+### Видео с геймплеем:
+Video 1 (https://youtu.be/RmDR_oyd53g)
+
+Video 2 (https://youtu.be/VaobqafbEVM)
+
+### Скриншоты
+![](http://nmeo.ru/storage/app/media/bubble/2019-03-24-6.png)
+![](http://nmeo.ru/storage/app/media/bubble/2019-03-24-14.png)
+![](http://nmeo.ru/storage/app/media/bubble/2019-03-24-17.png)
+
+
+
