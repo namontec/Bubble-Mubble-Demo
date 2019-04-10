@@ -42,7 +42,8 @@ Visual Studio 2017
 
 Coco2d-x 3.17.1
 
-
+### Запускаемые файлы
+win32 (http://nmeo.ru/storage/app/media/files/bubble.zip)
 
 ### Видео с геймплеем:
 Video 1 (https://youtu.be/RmDR_oyd53g)
