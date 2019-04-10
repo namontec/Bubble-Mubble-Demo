@@ -40,7 +40,7 @@ Time=50
 ### Инструменты
 Visual Studio 2017
 
-Coco2d-x 3.17.1
+Cocos2d-x 3.17.1
 
 ### Запускаемые файлы
 win32 (http://nmeo.ru/storage/app/media/files/bubble.zip)
